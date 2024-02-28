@@ -1,11 +1,16 @@
 {
   "name": "@apiteam/twa-bridge",
-  "version": "0.0.1",
+  "version": "0.0.2-beta.3",
   "description": "undefined",
   "license": "MIT",
+  "types": "index.ts",
   "author": {
     "name": "Egor Kytyukov",
     "url": "https://vk.com/xuserz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/APITEAMRU/twa-bridge"
   },
   "contributors": [],
   "keywords": [

@@ -1,6 +1,4 @@
-import { EventsData } from "listener"
-import sender from "sender"
-import { listener } from "solid"
+import { EventsData, listener, sender } from "../../index"
 import { createSignal, onCleanup, onMount } from "solid-js"
 
 
