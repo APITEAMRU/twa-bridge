@@ -1,9 +1,9 @@
-type Debug = (message: string) => void
+type Debug = (methondName: string, errorId: number) => void
 
-const debug: Debug = (message) => {
-  // if (process.env.NODE_ENV === 'development') {
-  //   console.error('[Telegram Debug]' + message)
-  // }
+const debug: Debug = (methondName, errorId) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.error(`[@apiteam/twa-bridge](${methondName}) = ${errorId}`)
+  }
 }
 
 export default debug

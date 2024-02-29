@@ -227,8 +227,10 @@ declare global {
   }
 }
 
-
-export const listenerStart = () => {
+/**
+ * Start listener
+ */
+const start = () => {
   /** Windows Phone */
   window.TelegramGameProxy_receiveEvent = receiveEvent
 
@@ -241,10 +243,10 @@ export const listenerStart = () => {
   function receiveEvent(eventName: string, eventData: any) {
     emiter.emit(eventName, eventData)
     emiter.emit('*', { name: eventName, data: eventData })
-    // test.emit('*', { name: eventName, data: eventData })
   }
 }
-listenerStart()
+
+start()
 
 type Listened = <T extends EventsData, E extends keyof T, D extends T[E]>(eventName: E, callback: (eventData: D) => void) => void
 

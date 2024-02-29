@@ -1,5 +1,7 @@
 import { getPlatform } from ".."
 
+export const NOT_SUPPORTED = 'not_supported'
+
 type CheckAvailability = (minVersion: number, platforms: Array<'web' | 'desktop' | 'phone'>) => boolean
 
 const checkAvailability: CheckAvailability = (minVersion, platforms) => {

@@ -1,7 +1,14 @@
 import * as solid_js from 'solid-js';
 
+declare const createIsViewportChanged: () => solid_js.Accessor<{
+    height: number;
+    width?: number | undefined;
+    is_expanded: boolean;
+    is_state_stable: boolean;
+}>;
+
 type Close = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Closes Mini App.
@@ -15,7 +22,7 @@ declare const close: Close;
 declare const supportClose: () => boolean;
 
 type CloseScanQrPopup = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Closes a QR scanner. The Telegram application creates the scan_qr_popup_closed event.
@@ -34,7 +41,7 @@ type DataSend = (eventData: {
      */
     data: string;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Sends data to the bot. When this method is called, a service message is sent to the bot containing the data of the length up to 4096 bytes.
@@ -52,7 +59,7 @@ declare const dataSend: DataSend;
 declare const supportDataSend: () => boolean;
 
 type Expand = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Closes Mini App.
@@ -69,7 +76,7 @@ type IframeReady = (eventData: {
      */
     reload_supported?: boolean;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Notifies parent iframe about the current frame is ready.
@@ -85,7 +92,7 @@ declare const iframeReady: IframeReady;
 declare const supportIframeReady: () => boolean;
 
 type IframeWillReload = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Notifies parent iframe about the current iframe is going to reload.
@@ -101,8 +108,10 @@ declare const supportIframeWillReload: () => boolean;
 type InvokeCustomMethod = (eventData: {
     /**
      * Current invocation unique identifier.
+     *
+     * Default: () => randomReqId
      */
-    req_id: string;
+    req_id?: string;
     /**
      * Method name.
      */
@@ -111,9 +120,10 @@ type InvokeCustomMethod = (eventData: {
      * Parameters according to method.
      */
     params: unknown;
-}) => {
-    status: boolean | 'not_supported';
-};
+}) => Promise<{
+    status: boolean | typeof NOT_SUPPORTED;
+    data?: EventsData[typeof EventCustomMethodInvoked];
+}>;
 /**
  * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-invoke-custom-method
  */
@@ -129,7 +139,7 @@ type OpenInvoice = (eventData: {
      */
     slug: string;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Opens an invoice by its specified slug.
@@ -154,7 +164,7 @@ type OpenLink = (eventData: {
      */
     try_instant_view?: boolean;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Opens link in the default browser.
@@ -193,9 +203,10 @@ type OpenPopup = (eventData: {
      * List of buttons to be displayed in the popup, 1-3 buttons
      */
     buttons: PopupButton[];
-}) => {
-    status: boolean | 'not_supported';
-};
+}) => Promise<{
+    status: boolean | typeof NOT_SUPPORTED;
+    data?: EventsData['popup_closed'];
+}>;
 /**
  * Opens a new popup. When user closes the popup, Telegram creates the popup_closed event.
  *
@@ -217,10 +228,8 @@ type OpenScanQrPopup = (eventData: {
      */
     is_close?: boolean;
 }) => Promise<{
-    status: boolean | 'not_supported' | 'closed';
-    data: {
-        data?: string;
-    };
+    status: boolean | typeof NOT_SUPPORTED | 'closed';
+    data?: EventsData[typeof EventQrTextReceived];
 }>;
 /**
  * Opens a QR scanner.
@@ -245,7 +254,7 @@ type OpenTgLink = (eventData: {
      */
     path_full: string;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Opens the Telegram link by its pathname and query parameters.
@@ -263,11 +272,14 @@ declare const supportOpenTgLink: () => boolean;
 type ReadTextFromClipboard = (eventData: {
     /**
      * Unique request identifier. Should be any unique string to handle the generated event appropriately.
+     *
+     * Default: () => randomReqId
      */
-    req_id: string;
-}) => {
-    status: boolean | 'not_supported';
-};
+    req_id?: string;
+}) => Promise<{
+    status: boolean | typeof NOT_SUPPORTED;
+    data?: EventsData[typeof EventClipboardTextReceived];
+}>;
 /**
  * Reads text from the clipboard.
  *
@@ -282,7 +294,7 @@ declare const readTextFromClipboard: ReadTextFromClipboard;
 declare const supportReadTextFromClipboard: () => boolean;
 
 type Ready = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Notifies Telegram about current application is ready to be shown.
@@ -298,7 +310,7 @@ declare const ready: Ready;
 declare const supportReady: () => boolean;
 
 type RequestPhone = () => Promise<{
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 }>;
 /**
  * Requests access to current user's phone.
@@ -312,7 +324,7 @@ declare const requestPhone: RequestPhone;
 declare const supportRequestPhone: () => boolean;
 
 type RequestTheme = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Requests current theme from Telegram.
@@ -328,7 +340,7 @@ declare const requestTheme: RequestTheme;
 declare const supportRequestTheme: () => boolean;
 
 type RequestViewport = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Requests current viewport information from Telegram.
@@ -344,7 +356,7 @@ declare const requestViewport: RequestViewport;
 declare const supportRequestViewport: () => boolean;
 
 type RequestWriteAccess = () => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Requests write message access to current user.
@@ -363,7 +375,7 @@ type SetBackgroundColor = (eventData: {
      */
     color: string;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Updates the Mini App background color.
@@ -386,7 +398,7 @@ type SetHeaderColor = (eventData: {
      */
     color: string;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Updates the Mini App header color. This method should accept color_key or color property.
@@ -405,7 +417,7 @@ type SetupBackButton = (eventData: {
      */
     is_visible: boolean;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Updates the Back Button settings.
@@ -424,7 +436,7 @@ type SetupClosingBehavior = (eventData: {
      */
     need_confirmation: boolean;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Updates current closing behavior.
@@ -463,7 +475,7 @@ type SetupMainButton = (eventData: {
      */
     text_color?: string;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Updates the Main Button settings.
@@ -482,7 +494,7 @@ type SetupSettingsButton = (eventData: {
      */
     is_visible: boolean;
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Updates current state of Settings Button.
@@ -507,7 +519,7 @@ type SwitchInlineQuery = (eventData: {
      */
     chat_types: ['users', 'bots', 'groups', 'channels'];
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Inserts the bot's username and the specified inline query in the current chat's input field.
@@ -560,7 +572,7 @@ type TriggerHapticFeedback = (eventData: {
      */
     notification_type: 'error' | 'success' | 'warning';
 }) => {
-    status: boolean | 'not_supported';
+    status: boolean | typeof NOT_SUPPORTED;
 };
 /**
  * Generates the haptic feedback event.
@@ -708,13 +720,6 @@ type GetInitData = () => null | {
  */
 declare const getInitData: GetInitData;
 
-declare const createIsViewportChanged: () => solid_js.Accessor<{
-    height: number;
-    width?: number | undefined;
-    is_expanded: boolean;
-    is_state_stable: boolean;
-}>;
-
 type Sender = (eventType: string, eventData?: any) => void;
 /**
  * EDIT
@@ -724,7 +729,7 @@ type Sender = (eventType: string, eventData?: any) => void;
  */
 declare const sender: Sender;
 
-type Debug = (message: string) => void;
+type Debug = (methondName: string, errorId: number) => void;
 declare const debug: Debug;
 
 type EventsData = {
@@ -895,23 +900,66 @@ declare global {
         };
     }
 }
-declare const listenerStart: () => void;
 type Listened = <T extends EventsData, E extends keyof T, D extends T[E]>(eventName: E, callback: (eventData: D) => void) => void;
 declare const on: Listened;
 declare const off: Listened;
 declare const once: Listened;
 
 type listener_EventsData = EventsData;
-declare const listener_listenerStart: typeof listenerStart;
 declare const listener_off: typeof off;
 declare const listener_on: typeof on;
 declare const listener_once: typeof once;
 declare namespace listener {
-  export { type listener_EventsData as EventsData, listener_listenerStart as listenerStart, listener_off as off, listener_on as on, listener_once as once };
+  export { type listener_EventsData as EventsData, listener_off as off, listener_on as on, listener_once as once };
 }
 
 declare const TG_WEB = "web";
 declare const TG_PHONE = "phone";
 declare const TG_DESKTOP = "desktop";
 
-export { type EventsData, TG_DESKTOP, TG_PHONE, TG_WEB, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, setBackgroundColor as bridgeSetBackgroundColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSetBackgroundColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSwitchInlineQuery, supportTriggerHapticFeedback };
+declare const NOT_SUPPORTED = "not_supported";
+
+declare const MethodInvokeCustomMethod = "web_app_invoke_custom_method";
+declare const MethodOpenScanQrPopup = "web_app_open_scan_qr_popup";
+declare const MethodReadTextFromClipboard = "web_app_read_text_from_clipboard";
+declare const MethodRequestPhone = "web_app_request_phone";
+declare const MethodClose = "web_app_close";
+declare const MethodCloseScanQrPopup = "web_app_close_scan_qr_popup";
+declare const MethodDataSend = "web_app_data_send";
+declare const MethodExpand = "web_app_expand";
+declare const MethodIframeReady = "iframe_ready";
+declare const MethodIframeWillReload = "iframe_will_reload";
+declare const MethodOpenInvoice = "web_app_open_invoice";
+declare const MethodOpenLink = "web_app_open_link";
+declare const MethodOpenPopup = "web_app_open_popup";
+declare const MethodOpenTgLink = "web_app_open_tg_link";
+declare const MethodReady = "web_app_ready";
+declare const MethodRequestTheme = "web_app_request_theme";
+declare const MethodRequestViewport = "web_app_request_viewport";
+declare const MethodRequestWriteAccess = "web_app_request_write_access";
+declare const MethodSetBackgroundColor = "web_app_set_background_color";
+declare const MethodSetHeaderColor = "web_app_set_header_color";
+declare const MethodSetupBackButton = "web_app_setup_back_button";
+declare const MethodSetupClosingBehavior = "web_app_setup_closing_behavior";
+declare const MethodSetupMainButton = "web_app_setup_main_button";
+declare const MethodSetupSettingsButton = "web_app_setup_settings_button";
+declare const MethodSwitchInlineQuery = "web_app_switch_inline_query";
+declare const MethodTriggerHapticFeedback = "web_app_trigger_haptic_feedback";
+
+declare const EventBackButtonPressed = "back_button_pressed";
+declare const EventClipboardTextReceived = "clipboard_text_received";
+declare const EventCustomMethodInvoked = "custom_method_invoked";
+declare const EventInvoiceClosed = "invoice_closed";
+declare const EventMainButtonPressed = "main_button_pressed";
+declare const EventPhoneRequested = "phone_requested";
+declare const EventPopupClosed = "popup_closed";
+declare const EventReloadIframe = "reload_iframe";
+declare const EventQrTextReceived = "qr_text_received";
+declare const EventScanQrPopupClosed = "scan_qr_popup_closed";
+declare const EventSetCustomStyle = "set_custom_style";
+declare const EventSettingsButtonPressed = "settings_button_pressed";
+declare const EventThemeChanged = "theme_changed";
+declare const EventViewportChanged = "viewport_changed";
+declare const EventWriteAccessRequested = "write_access_requested";
+
+export { EventBackButtonPressed, EventClipboardTextReceived, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestPhone, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSwitchInlineQuery, MethodTriggerHapticFeedback, NOT_SUPPORTED, TG_DESKTOP, TG_PHONE, TG_WEB, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, setBackgroundColor as bridgeSetBackgroundColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSetBackgroundColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSwitchInlineQuery, supportTriggerHapticFeedback };

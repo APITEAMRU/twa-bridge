@@ -1,24 +1,24 @@
-import { EventsData, listener, sender } from "../../index"
+import { EventViewportChanged, EventsData, MethodRequestViewport, listener, sender } from "../../index"
 import { createSignal, onCleanup, onMount } from "solid-js"
 
 
 export const createIsViewportChanged = () => {
-  const [viewportChanged, setViewportChanged] = createSignal<EventsData['viewport_changed']>({
+  const [viewportChanged, setViewportChanged] = createSignal<EventsData[typeof EventViewportChanged]>({
     height: 0,
     is_expanded: false,
     is_state_stable: false
   })
 
-  const callbackViewportChanged = (data: EventsData['viewport_changed']) =>
+  const callbackViewportChanged = (data: EventsData[typeof EventViewportChanged]) =>
     setViewportChanged(data)
 
   onMount(() => {
-    listener.on('viewport_changed', callbackViewportChanged)
-    sender('web_app_request_viewport')
+    listener.on(EventViewportChanged, callbackViewportChanged)
+    sender(MethodRequestViewport)
   })
 
   onCleanup(() => {
-    listener.off('viewport_changed', callbackViewportChanged)
+    listener.off(EventViewportChanged, callbackViewportChanged)
   })
 
   return viewportChanged
