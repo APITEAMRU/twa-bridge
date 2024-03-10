@@ -1,5 +1,5 @@
 {
-  "name": "@apiteam/twa-bridge/solid",
+  "name": "@apiteam/twa-bridge/react",
   "main": "index.js",
   "module": "index.mjs",
   "typings": "index.d.ts",
@@ -11,6 +11,7 @@
   "types": "index.d.ts",
   "type": "module",
   "peerDependencies": {
-    "solid-js": "^1.7.12"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }

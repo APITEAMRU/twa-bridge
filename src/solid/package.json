@@ -1,5 +1,5 @@
 {
-  "name": "twa_sdk",
+  "name": "@apiteam/twa-bridge/solid",
   "main": "index.js",
   "module": "index.mjs",
   "typings": "index.d.ts",

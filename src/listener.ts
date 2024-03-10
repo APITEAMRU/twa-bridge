@@ -1,3 +1,6 @@
+import { EventThemeChanged } from "solid";
+import { getThemeParams } from "utils";
+
 type EventDispatch<D> = (data: D) => void;
 
 type EmiterVoid<E extends Record<string | number | symbol, unknown>, K extends keyof E> = (
@@ -241,6 +244,12 @@ const start = () => {
   window.TelegramGameProxy = { receiveEvent }
 
   function receiveEvent(eventName: string, eventData: any) {
+
+    /* Fix colors */
+    if (eventName === EventThemeChanged) {
+      eventData.theme_params = getThemeParams(eventData.theme_params)
+    }
+
     emiter.emit(eventName, eventData)
     emiter.emit('*', { name: eventName, data: eventData })
   }
