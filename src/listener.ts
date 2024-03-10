@@ -1,5 +1,5 @@
-import { EventThemeChanged } from "solid";
-import { getThemeParams } from "utils";
+import { EventThemeChanged } from "../src/types/events";
+import { getThemeParams } from "./utils";
 
 type EventDispatch<D> = (data: D) => void;
 

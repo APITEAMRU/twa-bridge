@@ -28,10 +28,10 @@ const getThemeParams = (theme_params: Record<string, string>) => {
   const colors = JSON.parse(params.get('tgWebAppThemeParams') ?? "")
 
   var colorTheme: Record<string, string> = colors;
-  var color;
 
   for (var key in theme_params) {
-    if (color = parseColorToHex(theme_params[key]) && typeof color === "string") {
+    var color = parseColorToHex(theme_params[key])
+    if (typeof color === "string") {
       colorTheme[key] = color
     }
   }

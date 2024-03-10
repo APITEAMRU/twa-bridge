@@ -5,11 +5,11 @@ type SetHeaderColor = (eventData: {
   /**
    * The Mini App header color key. Could be either bg_color or secondary_bg_color.
    */
-  color_key: 'bg_color' | 'secondary_bg_color'
+  color_key?: 'bg_color' | 'secondary_bg_color'
   /**
-   * Color in RGB format.
+   * Color in HEX format.
    */
-  color: string
+  color?: string
 }) => {
   status: boolean | typeof NOT_SUPPORTED
 }

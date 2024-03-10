@@ -3,6 +3,7 @@ import dts from 'rollup-plugin-dts';
 import esbuild from 'rollup-plugin-esbuild';
 import terser from '@rollup/plugin-terser';
 import copy from "rollup-plugin-copy";
+import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 
 const external = ["react"];
 
@@ -23,12 +24,12 @@ const config: RollupOptions[] = [
       }
     ],
     external: (name) => external.includes(name),
-    plugins: [esbuild(), terser()]
+    plugins: [typescriptPaths(), esbuild(), terser()]
   },
   {
     input: 'src/react/index.ts',
     external: (name) => external.includes(name),
-    plugins: [dts(), copy({
+    plugins: [typescriptPaths(), dts(), copy({
       targets: [
         { src: "LICENSE", dest: "dist" },
         { src: "README.md", dest: "dist" },
