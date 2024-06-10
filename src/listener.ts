@@ -270,4 +270,3 @@ export const off: Listened = (eventName, callback) => {
 export const once: Listened = (eventName, callback) => {
   emiter.once(eventName, callback as EventDispatch<unknown>)
 }
-
