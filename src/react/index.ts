@@ -97,6 +97,10 @@ export {
 	default as bridgeSessionStorageGet,
 	supportSessionStorageGet,
 } from './methods/storageGet'
+export {
+	default as bridgeSetupSwipeBehavior,
+	supportSetupSwipeBehavior,
+} from './methods/setupSwipeBehavior'
 
 export { default as bridgeGetInitData } from './methods/getInitData'
 
@@ -142,6 +146,7 @@ export {
 	MethodSetupSettingsButton,
 	MethodSwitchInlineQuery,
 	MethodTriggerHapticFeedback,
+	MethodSetupSwipeBehavior,
 } from '../types/methods'
 
 export {

@@ -1,6 +1,6 @@
 {
   "name": "@apiteam/twa-bridge",
-  "version": "7.0.0-beta.13",
+  "version": "7.7.0-beta.2",
   "description": "Telegram bridge",
   "license": "MIT",
   "types": "index.ts",

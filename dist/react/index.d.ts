@@ -606,6 +606,20 @@ declare const sessionStorageGet: SessionStorageGet;
  */
 declare const supportSessionStorageGet: () => boolean;
 
+type SetupSwipeBehavior = ({ allow_vertical_swipe, }: {
+    allow_vertical_swipe: boolean;
+}) => {
+    status: boolean | typeof NOT_SUPPORTED;
+};
+/**
+ * sessions storage set.
+ */
+declare const setupSwipeBehavior: SetupSwipeBehavior;
+/**
+ * Method support check
+ */
+declare const supportSetupSwipeBehavior: () => boolean;
+
 type User = {
     /**
      * Optional. True, if this user added the bot to the attachment menu.
@@ -755,13 +769,13 @@ declare const debug: Debug;
 
 type EventsData = {
     /**
-   * User clicked the Back Button.
-   */
-    "back_button_pressed": undefined;
+     * User clicked the Back Button.
+     */
+    back_button_pressed: undefined;
     /**
      * Telegram application attempted to extract text from clipboard.
      */
-    "clipboard_text_received": {
+    clipboard_text_received: {
         /**
          * Passed during the web_app_read_text_from_clipboard method invocation req_id value.
          */
@@ -772,9 +786,9 @@ type EventsData = {
         data?: string | null;
     };
     /**
-   * Custom method invocation completed.
-   */
-    "custom_method_invoked": {
+     * Custom method invocation completed.
+     */
+    custom_method_invoked: {
         /**
          * Unique identifier of this invocation.
          */
@@ -789,9 +803,9 @@ type EventsData = {
         error?: string;
     };
     /**
-   * An invoice was closed.
-   */
-    "invoice_closed": {
+     * An invoice was closed.
+     */
+    invoice_closed: {
         /**
          * Passed during the  web_app_open_invoice  method invocation slug value.
          */
@@ -810,22 +824,22 @@ type EventsData = {
         status: 'paid' | 'failed' | 'pending' | 'cancelled';
     };
     /**
-   * User clicked the Main Button.
-   */
-    "main_button_pressed": undefined;
+     * User clicked the Main Button.
+     */
+    main_button_pressed: undefined;
     /**
-   * Application received phone access request status.
-   */
-    "phone_requested": {
+     * Application received phone access request status.
+     */
+    phone_requested: {
         /**
          * Request status. Can only be sent
          */
         status: 'sent';
     };
     /**
-   * Popup was closed.
-   */
-    "popup_closed": {
+     * Popup was closed.
+     */
+    popup_closed: {
         /**
          * Optional. Identifier of the clicked button.
          *
@@ -834,36 +848,36 @@ type EventsData = {
         button_id?: string;
     };
     /**
-   * Parent iframe requested current iframe reload.
-   */
-    "reload_iframe": undefined;
+     * Parent iframe requested current iframe reload.
+     */
+    reload_iframe: undefined;
     /**
      * The QR scanner scanned some QR and extracted its content.
      */
-    "qr_text_received": {
+    qr_text_received: {
         /**
          * Optional. Data extracted from the QR.
          */
         data?: string;
     };
     /**
-   * QR scanner was closed.
-   */
-    "scan_qr_popup_closed": undefined;
+     * QR scanner was closed.
+     */
+    scan_qr_popup_closed: undefined;
     /**
-   * The event which is usually sent by the Telegram web application.
-   *
-   * Its payload represents <style/> tag html content, a developer could use. The stylesheet described in the payload will help the developer to stylize the app scrollbar (but he is still able to do it himself).
-   */
-    "set_custom_style": undefined;
+     * The event which is usually sent by the Telegram web application.
+     *
+     * Its payload represents <style/> tag html content, a developer could use. The stylesheet described in the payload will help the developer to stylize the app scrollbar (but he is still able to do it himself).
+     */
+    set_custom_style: undefined;
     /**
-   * Occurs when the Settings Button was pressed.
-   */
-    "settings_button_pressed": undefined;
+     * Occurs when the Settings Button was pressed.
+     */
+    settings_button_pressed: undefined;
     /**
-    * Occurs whenever the theme was changed in the user's Telegram app ( including switching to night mode).
-    */
-    "theme_changed": {
+     * Occurs whenever the theme was changed in the user's Telegram app ( including switching to night mode).
+     */
+    theme_changed: {
         /**
          * Map where the key is a theme stylesheet key and value is the corresponding color in #RRGGBB format.
          */
@@ -874,7 +888,7 @@ type EventsData = {
      *
      * For example, when the user started dragging the application or called the expansion method.
      */
-    "viewport_changed": {
+    viewport_changed: {
         /**
          * The viewport height.
          */
@@ -893,9 +907,9 @@ type EventsData = {
         is_state_stable: boolean;
     };
     /**
-    * Application received write access request status.
-    */
-    "write_access_requested": {
+     * Application received write access request status.
+     */
+    write_access_requested: {
         /**
          * Request status. Can only be allowed.
          */
@@ -915,7 +929,7 @@ declare global {
     interface Window {
         TelegramWebviewProxy: TelegramWebviewProxy;
         TelegramGameProxy: TelegramGameProxy;
-        TelegramGameProxy_receiveEvent: TelegramGameProxy["receiveEvent"];
+        TelegramGameProxy_receiveEvent: TelegramGameProxy['receiveEvent'];
         Telegram: {
             WebView: TelegramGameProxy;
         };
@@ -968,6 +982,7 @@ declare const MethodSetupMainButton = "web_app_setup_main_button";
 declare const MethodSetupSettingsButton = "web_app_setup_settings_button";
 declare const MethodSwitchInlineQuery = "web_app_switch_inline_query";
 declare const MethodTriggerHapticFeedback = "web_app_trigger_haptic_feedback";
+declare const MethodSetupSwipeBehavior = "web_app_setup_swipe_behavior";
 
 declare const EventBackButtonPressed = "back_button_pressed";
 declare const EventClipboardTextReceived = "clipboard_text_received";
@@ -985,4 +1000,4 @@ declare const EventThemeChanged = "theme_changed";
 declare const EventViewportChanged = "viewport_changed";
 declare const EventWriteAccessRequested = "write_access_requested";
 
-export { EventBackButtonPressed, EventClipboardTextReceived, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestPhone, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSwitchInlineQuery, MethodTriggerHapticFeedback, NOT_SUPPORTED, TG_DESKTOP, TG_PHONE, TG_WEB, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, debug, getPlatform, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSwitchInlineQuery, supportTriggerHapticFeedback };
+export { EventBackButtonPressed, EventClipboardTextReceived, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestPhone, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSetupSwipeBehavior, MethodSwitchInlineQuery, MethodTriggerHapticFeedback, NOT_SUPPORTED, TG_DESKTOP, TG_PHONE, TG_WEB, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, setupSwipeBehavior as bridgeSetupSwipeBehavior, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, debug, getPlatform, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSetupSwipeBehavior, supportSwitchInlineQuery, supportTriggerHapticFeedback };
