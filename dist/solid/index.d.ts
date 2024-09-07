@@ -11,9 +11,9 @@ type Close = () => {
     status: boolean | typeof NOT_SUPPORTED;
 };
 /**
- * Closes Mini App.
+ * EN: A method that closes the Mini App.
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-close
+ * RU: Метод, который закрывает мини-приложение.
  */
 declare const close: Close;
 /**
@@ -25,9 +25,13 @@ type CloseScanQrPopup = () => {
     status: boolean | typeof NOT_SUPPORTED;
 };
 /**
- * Closes a QR scanner. The Telegram application creates the scan_qr_popup_closed event.
+ * EN: A method that closes the native popup for scanning a QR code opened with the `openScanQrPopup` method.
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-close-scan-qr-popup
+ * Run it if you received valid data in the event `qr_text_received`.
+ *
+ * RU: Метод, который закрывает собственное всплывающее окно для сканирования QR-кода, открытого с помощью метода `openScanQrPopup`.
+ *
+ * Запустите его, если вы получили действительные данные в событии `qr_text_received`.
  */
 declare const closeScanQrPopup: CloseScanQrPopup;
 /**
@@ -37,20 +41,30 @@ declare const supportCloseScanQrPopup: () => boolean;
 
 type DataSend = (eventData: {
     /**
-     * Data to send to a bot. Should not have size of more than 4096 bytes.
+     ** EN: Data to send to a bot. Should not have size of more than 4096 bytes.
+
+     ** RU: Данные для отправки боту. Не должен иметь размер более 4096 байт.
      */
     data: string;
 }) => {
     status: boolean | typeof NOT_SUPPORTED;
 };
 /**
- * Sends data to the bot. When this method is called, a service message is sent to the bot containing the data of the length up to 4096 bytes.
+ ** EN: A method used to send data to the bot.
  *
- * Then, Mini App will be closed.
+ * When this method is called, a service message is sent to the bot containing the data data of the length up to 4096 bytes, and the Mini App is closed.
  *
- * To get more information, take a look at web_app_data field in the class Message.
+ * See the field `web_app_data` in the class Message.
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-data-send
+ *! This method is only available for Mini Apps launched via a Keyboard button.
+ *
+ ** RU: Метод, используемый для отправки данных боту.
+ *
+ * При вызове этого метода боту отправляется служебное сообщение, содержащее данные длиной до 4096 байт, и мини-приложение закрывается.
+ *
+ * Смотрите поле `web_app_data` в сообщении класса.
+ *
+ *! Этот метод доступен только для мини-приложений, запускаемых с помощью кнопки клавиатуры.
  */
 declare const dataSend: DataSend;
 /**
@@ -62,7 +76,9 @@ type Expand = () => {
     status: boolean | typeof NOT_SUPPORTED;
 };
 /**
- * Closes Mini App.
+ ** EN: A method that expands the Mini App to the maximum available height.
+ *
+ ** RU: Метод, расширяющий мини-приложение до максимально доступной высоты.
  */
 declare const expand: Expand;
 /**
@@ -410,6 +426,27 @@ declare const setHeaderColor: SetHeaderColor;
  * Method support check
  */
 declare const supportSetHeaderColor: () => boolean;
+
+type SetBottomBarColor = (eventData: {
+    /**
+     * The Mini App header color key. Could be either bg_color or secondary_bg_color.
+     */
+    color_key?: 'bg_color' | 'secondary_bg_color' | 'bottom_bar_bg_color';
+    /**
+     * Color in HEX format.
+     */
+    color?: string;
+}) => {
+    status: boolean | typeof NOT_SUPPORTED;
+};
+/**
+ * Updates the Mini App header color. This method should accept color_key or color property.
+ */
+declare const setBottomBarColor: SetBottomBarColor;
+/**
+ * Method support check
+ */
+declare const supportSetBottomBarColor: () => boolean;
 
 type SetupBackButton = (eventData: {
     /**
@@ -890,7 +927,50 @@ type EventsData = {
         /**
          * Map where the key is a theme stylesheet key and value is the corresponding color in #RRGGBB format.
          */
-        theme_params: Record<string, string>;
+        theme_params: {
+            bg_color: string;
+            text_color: string;
+            hint_color: string;
+            link_color: string;
+            button_color: string;
+            button_text_color: string;
+            /**
+             * Bot API 6.1+
+             */
+            secondary_bg_color: string;
+            /**
+             * Bot API 7.0+
+             */
+            header_bg_color: string;
+            /**
+             * Bot API 7.10+
+             */
+            bottom_bar_bg_color: string;
+            /**
+             * Bot API 7.0+
+             */
+            accent_text_color: string;
+            /**
+             * Bot API 7.0+
+             */
+            section_bg_color: string;
+            /**
+             * Bot API 7.0+
+             */
+            section_header_text_color: string;
+            /**
+             * Bot API 7.6+
+             */
+            section_separator_color: string;
+            /**
+             * Bot API 7.0+
+             */
+            subtitle_text_color: string;
+            /**
+             * Bot API 7.0+
+             */
+            destructive_text_color: string;
+        };
     };
     /**
      * Occurs whenever the viewport has been changed.
@@ -985,6 +1065,7 @@ declare const MethodRequestViewport = "web_app_request_viewport";
 declare const MethodRequestWriteAccess = "web_app_request_write_access";
 declare const MethodSetBackgroundColor = "web_app_set_background_color";
 declare const MethodSetHeaderColor = "web_app_set_header_color";
+declare const MethodSetBottomBarColor = "web_app_set_bottom_bar_color";
 declare const MethodSetupBackButton = "web_app_setup_back_button";
 declare const MethodSetupClosingBehavior = "web_app_setup_closing_behavior";
 declare const MethodSetupMainButton = "web_app_setup_main_button";
@@ -1009,4 +1090,4 @@ declare const EventThemeChanged = "theme_changed";
 declare const EventViewportChanged = "viewport_changed";
 declare const EventWriteAccessRequested = "write_access_requested";
 
-export { EventBackButtonPressed, EventClipboardTextReceived, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestPhone, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSetupSwipeBehavior, MethodSwitchInlineQuery, MethodTriggerHapticFeedback, NOT_SUPPORTED, TG_DESKTOP, TG_PHONE, TG_WEB, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, setupSwipeBehavior as bridgeSetupSwipeBehavior, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, getPlatform, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSetupSwipeBehavior, supportSwitchInlineQuery, supportTriggerHapticFeedback };
+export { EventBackButtonPressed, EventClipboardTextReceived, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestPhone, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetBottomBarColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSetupSwipeBehavior, MethodSwitchInlineQuery, MethodTriggerHapticFeedback, NOT_SUPPORTED, TG_DESKTOP, TG_PHONE, TG_WEB, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setBottomBarColor as bridgeSetBottomBarColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, setupSwipeBehavior as bridgeSetupSwipeBehavior, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, getPlatform, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetBottomBarColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSetupSwipeBehavior, supportSwitchInlineQuery, supportTriggerHapticFeedback };

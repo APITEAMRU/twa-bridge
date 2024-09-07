@@ -67,6 +67,10 @@ export {
 	supportSetHeaderColor,
 } from './methods/setHeaderColor'
 export {
+	default as bridgeSetBottomBarColor,
+	supportSetBottomBarColor,
+} from './methods/setBottomBarColor'
+export {
 	default as bridgeSetupBackButton,
 	supportSetupBackButton,
 } from './methods/setupBackButton'
@@ -142,6 +146,7 @@ export {
 	MethodRequestWriteAccess,
 	MethodSetBackgroundColor,
 	MethodSetHeaderColor,
+	MethodSetBottomBarColor,
 	MethodSetupBackButton,
 	MethodSetupClosingBehavior,
 	MethodSetupMainButton,
