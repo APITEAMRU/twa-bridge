@@ -1,26 +1,22 @@
-import { NOT_SUPPORTED, debug } from "../index";
+import { NOT_SUPPORTED, debug } from '../index'
 
-type SessionStorageSet = ({
-  key,
-  value
-}: {
-  key: string,
-  value: any
-}) => {
-  status: boolean | typeof NOT_SUPPORTED
+type SessionStorageSet = ({ key, value }: { key: string; value: any }) => {
+	status: boolean | typeof NOT_SUPPORTED
 }
 
 /**
  * sessions storage set.
  */
 const sessionStorageSet: SessionStorageSet = ({ key, value }) => {
-  // if (!supportSessionStorageSet()) { debug("sessionStorageSet", 1); return { status: NOT_SUPPORTED } }
+	// if (!supportSessionStorageSet()) { debug("sessionStorageSet", 1); return { status: NOT_SUPPORTED } }
 
-  try {
-    window.sessionStorage.setItem("__telegram__" + key, JSON.stringify(value))
-    return { status: true }
-  } catch (e) { }
-  return { status: false }
+	try {
+		window.sessionStorage.setItem('__telegram__' + key, JSON.stringify(value))
+		return { status: true }
+	} catch (e) {
+		window.sessionStorage.setItem('__telegram__' + key, value)
+		return { status: true }
+	}
 }
 
 /**

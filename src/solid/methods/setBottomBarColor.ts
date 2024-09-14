@@ -6,19 +6,13 @@ import {
 	NOT_SUPPORTED,
 	debug,
 	MethodSetBottomBarColor,
+	SenderData,
 } from '../index'
 import { supportCheck } from '../../utils'
 
-type SetBottomBarColor = (eventData: {
-	/**
-	 * The Mini App header color key. Could be either bg_color or secondary_bg_color.
-	 */
-	color_key?: 'bg_color' | 'secondary_bg_color' | 'bottom_bar_bg_color'
-	/**
-	 * Color in HEX format.
-	 */
-	color?: string
-}) => {
+type SetBottomBarColor = (
+	eventData: SenderData[typeof MethodSetBottomBarColor]
+) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 
@@ -32,7 +26,7 @@ const setBottomBarColor: SetBottomBarColor = eventData => {
 	}
 
 	sender(MethodSetBottomBarColor, {
-		color: eventData.color || eventData.color_key,
+		color: eventData?.color || eventData?.color_key,
 	})
 	return { status: true }
 }

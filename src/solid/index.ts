@@ -108,12 +108,25 @@ export {
 	supportSetupSwipeBehavior,
 } from './methods/setupSwipeBehavior'
 
-export { default as bridgeGetInitData } from './methods/getInitData'
+export {
+	default as bridgeGetInitData,
+	type GetInitData,
+} from './methods/getInitData'
+export {
+	default as bridgeGetThemeParams,
+	type ThemeParams,
+} from '../utils/themeParams/themeParams'
 
 export { default as sender } from '../sender'
+export { default as bridgeSend } from '../send'
 export { default as debug } from '../debug'
 export * as listener from '../listener'
 export type { EventsData } from '../listener'
+
+export {
+	default as ProviderTWA,
+	ContextTwa,
+} from './components/ProviderTWA/ProviderTWA'
 
 export {
 	TG_WEB,
@@ -154,6 +167,8 @@ export {
 	MethodSwitchInlineQuery,
 	MethodTriggerHapticFeedback,
 	MethodSetupSwipeBehavior,
+	type SenderData,
+	type PopupButton,
 } from '../types/methods'
 
 export {

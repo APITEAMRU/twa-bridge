@@ -1,5 +1,5 @@
 import { EventThemeChanged } from '../src/types/events'
-import { getThemeParams } from './utils'
+import { getThemeParams, ThemeParams } from './utils'
 
 type EventDispatch<D> = (data: D) => void
 
@@ -190,50 +190,7 @@ export type EventsData = {
 		/**
 		 * Map where the key is a theme stylesheet key and value is the corresponding color in #RRGGBB format.
 		 */
-		theme_params: {
-			bg_color: string
-			text_color: string
-			hint_color: string
-			link_color: string
-			button_color: string
-			button_text_color: string
-			/**
-			 * Bot API 6.1+
-			 */
-			secondary_bg_color: string
-			/**
-			 * Bot API 7.0+
-			 */
-			header_bg_color: string
-			/**
-			 * Bot API 7.10+
-			 */
-			bottom_bar_bg_color: string
-			/**
-			 * Bot API 7.0+
-			 */
-			accent_text_color: string
-			/**
-			 * Bot API 7.0+
-			 */
-			section_bg_color: string
-			/**
-			 * Bot API 7.0+
-			 */
-			section_header_text_color: string
-			/**
-			 * Bot API 7.6+
-			 */
-			section_separator_color: string
-			/**
-			 * Bot API 7.0+
-			 */
-			subtitle_text_color: string
-			/**
-			 * Bot API 7.0+
-			 */
-			destructive_text_color: string
-		} // Record<string, string>
+		theme_params: ThemeParams // Record<string, string>
 	}
 
 	/**

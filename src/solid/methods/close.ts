@@ -6,10 +6,11 @@ import {
 	NOT_SUPPORTED,
 	debug,
 	MethodClose,
+	SenderData,
 } from '../index'
 import { supportCheck } from '../../utils'
 
-type Close = () => {
+type Close = (eventData?: SenderData[typeof MethodClose]) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 
@@ -18,13 +19,13 @@ type Close = () => {
  *
  * RU: Метод, который закрывает мини-приложение.
  */
-const close: Close = () => {
+const close: Close = eventData => {
 	if (!supportClose()) {
 		debug(MethodClose, 1)
 		return { status: NOT_SUPPORTED }
 	}
 
-	sender(MethodClose)
+	sender(MethodClose, eventData)
 	return { status: true }
 }
 

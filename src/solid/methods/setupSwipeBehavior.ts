@@ -1,6 +1,7 @@
 import {
 	MethodSetupSwipeBehavior,
 	NOT_SUPPORTED,
+	SenderData,
 	TG_DESKTOP,
 	TG_PHONE,
 	TG_WEB,
@@ -9,11 +10,9 @@ import {
 } from '../index'
 import { supportCheck } from '../../utils'
 
-type SetupSwipeBehavior = ({
-	allow_vertical_swipe,
-}: {
-	allow_vertical_swipe: boolean
-}) => {
+type SetupSwipeBehavior = (
+	eventData: SenderData[typeof MethodSetupSwipeBehavior]
+) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 

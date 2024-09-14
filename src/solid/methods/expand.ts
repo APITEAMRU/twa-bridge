@@ -1,7 +1,14 @@
-import { TG_PHONE, sender, NOT_SUPPORTED, debug, MethodExpand } from '../index'
+import {
+	TG_PHONE,
+	sender,
+	NOT_SUPPORTED,
+	debug,
+	MethodExpand,
+	SenderData,
+} from '../index'
 import { supportCheck } from '../../utils'
 
-type Expand = () => {
+type Expand = (props?: SenderData[typeof MethodExpand]) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 
@@ -10,13 +17,13 @@ type Expand = () => {
  *
  ** RU: Метод, расширяющий мини-приложение до максимально доступной высоты.
  */
-const expand: Expand = () => {
+const expand: Expand = eventData => {
 	if (!supportExpand()) {
 		debug(MethodExpand, 1)
 		return { status: NOT_SUPPORTED }
 	}
 
-	sender(MethodExpand)
+	sender(MethodExpand, eventData)
 	return { status: true }
 }
 

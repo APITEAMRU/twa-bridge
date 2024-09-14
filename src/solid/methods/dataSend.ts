@@ -6,17 +6,11 @@ import {
 	NOT_SUPPORTED,
 	debug,
 	MethodDataSend,
+	SenderData,
 } from '../index'
 import { supportCheck } from '../../utils'
 
-type DataSend = (eventData: {
-	/**
-	 ** EN: Data to send to a bot. Should not have size of more than 4096 bytes.
-
-	 ** RU: Данные для отправки боту. Не должен иметь размер более 4096 байт.
-	 */
-	data: string
-}) => {
+type DataSend = (eventData: SenderData[typeof MethodDataSend]) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 

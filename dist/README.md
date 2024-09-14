@@ -36,9 +36,43 @@ And yes, it supports TS.
 
 ### Solid
 ```js
-import { createIsViewportChanged } from '@apiteam/twa-bridge/solid'
+import { 
+    listener, 
+    EventViewportChanged,
+    bridgeRequestViewport
+} from '@apiteam/twa-bridge/solid'
 
-const viewport = createIsViewportChanged()
+const onRequestViewport = (
+    eventData: EventsData[typeof EventViewportChanged]
+) => {
+    console.log({eventData})
+}
+
+listener.on(EventViewportChanged, onRequestViewport)
+bridgeRequestViewport()
+
+```
+### Use Context
+```js
+import { 
+    ProviderTWA,
+    ContextTwa
+} from '@apiteam/twa-bridge/solid'
+
+const Provider = () => {
+	return (
+		<ProviderTWA>
+			<App />
+		</ProviderTWA>
+	)
+}
+
+const App = () => {
+	const context = useContext(ContextTwa)
+	
+	return <div>FisrtName: {context.init?.user?.first_name}</div>
+}
+
 ```
 
 ### Errors
@@ -53,4 +87,4 @@ const viewport = createIsViewportChanged()
 | 6   | You are passing too few buttons, at least 1 button                |
 | 7   | You are passing too many buttons, maximum 3 buttons               |
 | 8   | The button text ignores the following values: "ok, close, cancel" |
-| 9   | EDIT_MESSAGE               
+| 9   | EDIT_MESSAGE                                                      |

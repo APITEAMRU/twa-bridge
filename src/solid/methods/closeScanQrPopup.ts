@@ -4,10 +4,13 @@ import {
 	NOT_SUPPORTED,
 	debug,
 	MethodCloseScanQrPopup,
+	SenderData,
 } from '../index'
 import { supportCheck } from '../../utils'
 
-type CloseScanQrPopup = () => {
+type CloseScanQrPopup = (
+	eventData?: SenderData[typeof MethodCloseScanQrPopup]
+) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 
@@ -20,13 +23,13 @@ type CloseScanQrPopup = () => {
  *
  * Запустите его, если вы получили действительные данные в событии `qr_text_received`.
  */
-const closeScanQrPopup: CloseScanQrPopup = () => {
+const closeScanQrPopup: CloseScanQrPopup = eventData => {
 	if (!supportCloseScanQrPopup()) {
 		debug(MethodCloseScanQrPopup, 1)
 		return { status: NOT_SUPPORTED }
 	}
 
-	sender(MethodCloseScanQrPopup)
+	sender(MethodCloseScanQrPopup, eventData)
 	return { status: true }
 }
 

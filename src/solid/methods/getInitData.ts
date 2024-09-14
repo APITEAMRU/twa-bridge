@@ -74,60 +74,62 @@ type Chat = {
 	username?: string
 }
 
-type GetInitData = () => null | {
-	/**
-	 * The date the initialization data was created.
-	 *
-	 * Is a number representing a Unix timestamp.
-	 */
-	auth_date: number
-	/**
-	 * Optional. The number of seconds after which a message can be sent via the method answerWebAppQuery.
-	 */
-	can_send_after?: number
-	/**
-	 * Optional. An object containing information about the chat with the bot in which the Mini Apps was launched.
-	 *
-	 * It is returned only for Mini Apps opened through the attachments menu.
-	 */
-	chat?: Chat
-	/**
-	 * Optional. The type of chat from which the Mini Apps was opened. Values:
-	 *
-	 * sender, private, group, supergroup, channel
-	 *
-	 * Returned only for applications opened by direct link.
-	 */
-	chat_type?: 'sender' | 'private' | 'group' | 'supergroup' | 'channel'
-	/**
-	 * Optional. A global identifier indicating the chat from which the Mini Apps was opened.
-	 *
-	 * Returned only for applications opened by direct link.
-	 */
-	chat_instance?: string
-	/**
-	 * Initialization data signature.
-	 */
-	hash: string
-	/**
-	 * Optional. The unique session ID of the Mini App. Used in the process of sending a message via the method answerWebAppQuery.
-	 */
-	query_id?: string
-	/**
-	 * Optional. An object containing data about the chat partner of the current user in the chat where the bot was launched via the attachment menu.
-	 *
-	 * Returned only for private chats and only for Mini Apps launched via the attachment menu.
-	 */
-	receiver?: User
-	/**
-	 * Optional. The value of the startattach or startapp query parameter specified in the link. It is returned only for Mini Apps opened through the attachment menu.
-	 */
-	start_param?: string
-	/**
-	 * Optional. An object containing information about the current user.
-	 */
-	user?: User
-}
+export type GetInitData =
+	| {
+			/**
+			 * The date the initialization data was created.
+			 *
+			 * Is a number representing a Unix timestamp.
+			 */
+			auth_date: number
+			/**
+			 * Optional. The number of seconds after which a message can be sent via the method answerWebAppQuery.
+			 */
+			can_send_after?: number
+			/**
+			 * Optional. An object containing information about the chat with the bot in which the Mini Apps was launched.
+			 *
+			 * It is returned only for Mini Apps opened through the attachments menu.
+			 */
+			chat?: Chat
+			/**
+			 * Optional. The type of chat from which the Mini Apps was opened. Values:
+			 *
+			 * sender, private, group, supergroup, channel
+			 *
+			 * Returned only for applications opened by direct link.
+			 */
+			chat_type?: 'sender' | 'private' | 'group' | 'supergroup' | 'channel'
+			/**
+			 * Optional. A global identifier indicating the chat from which the Mini Apps was opened.
+			 *
+			 * Returned only for applications opened by direct link.
+			 */
+			chat_instance?: string
+			/**
+			 * Initialization data signature.
+			 */
+			hash: string
+			/**
+			 * Optional. The unique session ID of the Mini App. Used in the process of sending a message via the method answerWebAppQuery.
+			 */
+			query_id?: string
+			/**
+			 * Optional. An object containing data about the chat partner of the current user in the chat where the bot was launched via the attachment menu.
+			 *
+			 * Returned only for private chats and only for Mini Apps launched via the attachment menu.
+			 */
+			receiver?: User
+			/**
+			 * Optional. The value of the startattach or startapp query parameter specified in the link. It is returned only for Mini Apps opened through the attachment menu.
+			 */
+			start_param?: string
+			/**
+			 * Optional. An object containing information about the current user.
+			 */
+			user?: User
+	  }
+	| undefined
 
 /**
  * In the list of launch parameters, initialization data is located in the tgWebAppData parameter.
@@ -136,13 +138,13 @@ type GetInitData = () => null | {
  *
  * Original: https://docs.telegram-mini-apps.com/platform/launch-parameters/init-data#init-data
  */
-const getInitData: GetInitData = () => {
+const getInitData = (): GetInitData => {
 	const hashParams = window.location.hash.slice(1)
 	const initDataRaw = new URLSearchParams(hashParams).get('tgWebAppData')
 
 	if (!initDataRaw) {
 		debug('getInitData', 2)
-		return null
+		return undefined
 	}
 
 	const initData = new URLSearchParams(initDataRaw)

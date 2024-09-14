@@ -2,7 +2,7 @@
   "scripts": {
     "build:react": "rollup --config config/rollup.react.config.ts --configPlugin @rollup/plugin-typescript",
     "build:solid": "rollup --config config/rollup.solid.config.ts --configPlugin @rollup/plugin-typescript",
-    "build": "npm run build:react && npm run build:solid",
+    "build": " npm run build:solid",
     "test": "jest --config jest.config.ts",
     "release": "git subtree push --prefix dist https://github.com/GMELUM/elum-state release"
   },
@@ -11,14 +11,11 @@
     "@rollup/plugin-typescript": "latest",
     "@types/jest": "^29.5.5",
     "@types/node": "^20.11.21",
-    "@types/react": "^18.0.28",
     "cross-env": "latest",
     "esbuild": "latest",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "nodemon": "latest",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "rollup": "latest",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-copy": "^3.4.0",
