@@ -47,6 +47,8 @@ export type ThemeParams = {
 	header_bg_color: string
 	/**
 	 * Bot API 7.10+
+	 *
+	 * @deprecated This parameter may not be provided.
 	 */
 	bottom_bar_bg_color: string
 	/**
@@ -63,6 +65,8 @@ export type ThemeParams = {
 	section_header_text_color: string
 	/**
 	 * Bot API 7.6+
+	 *
+	 * @deprecated This parameter may not be provided.
 	 */
 	section_separator_color: string
 	/**
@@ -96,6 +100,8 @@ const getThemeParams = (theme_params?: ThemeParams) => {
 	) {
 		colorTheme.secondary_bg_color = '#2c2c2e'
 	}
+
+	colorTheme.bottom_bar_bg_color
 
 	return colorTheme
 }
