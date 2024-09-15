@@ -75,27 +75,28 @@ export type ThemeParams = {
 	destructive_text_color: string
 }
 
-const getThemeParams = (theme_params: ThemeParams) => {
-	// temp iOS fix
-	if (
-		theme_params.bg_color == '#1c1c1d' &&
-		theme_params.bg_color == theme_params.secondary_bg_color
-	) {
-		theme_params.secondary_bg_color = '#2c2c2e'
-	}
-
+const getThemeParams = (theme_params?: ThemeParams) => {
 	const hash = window.location.hash.slice(1)
 	const params = new URLSearchParams(hash)
 	const colors = JSON.parse(params.get('tgWebAppThemeParams') ?? '')
 
-	var colorTheme: Record<string, string> = colors
+	const colorTheme: ThemeParams = theme_params || colors
 
-	for (var key of Object.keys(theme_params)) {
-		var color = parseColorToHex(theme_params[key as 'destructive_text_color'])
+	for (var key of Object.keys(colorTheme)) {
+		var color = parseColorToHex(colorTheme[key as 'destructive_text_color'])
 		if (typeof color === 'string') {
-			colorTheme[key] = color
+			colorTheme[key as 'destructive_text_color'] = color
 		}
 	}
+
+	// temp iOS fix
+	if (
+		colorTheme?.bg_color == '#1c1c1d' &&
+		colorTheme?.bg_color == colorTheme?.secondary_bg_color
+	) {
+		colorTheme.secondary_bg_color = '#2c2c2e'
+	}
+
 	return colorTheme
 }
 

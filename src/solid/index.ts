@@ -123,11 +123,14 @@ export { default as debug } from '../debug'
 export * as listener from '../listener'
 export type { EventsData } from '../listener'
 
+export { getAppData } from './helper'
+
 export {
 	default as ProviderTWA,
 	ContextTwa,
 } from './components/ProviderTWA/ProviderTWA'
 
+/* helpers */
 export {
 	TG_WEB,
 	TG_PHONE,
