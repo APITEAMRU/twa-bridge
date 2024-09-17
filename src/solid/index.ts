@@ -172,6 +172,7 @@ export {
 	MethodSetupSwipeBehavior,
 	type SenderData,
 	type PopupButton,
+	Method,
 } from '../types/methods'
 
 export {
