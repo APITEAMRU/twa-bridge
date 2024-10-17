@@ -26,6 +26,7 @@ export const MethodSetupSettingsButton = 'web_app_setup_settings_button'
 export const MethodSwitchInlineQuery = 'web_app_switch_inline_query'
 export const MethodTriggerHapticFeedback = 'web_app_trigger_haptic_feedback'
 export const MethodSetupSwipeBehavior = 'web_app_setup_swipe_behavior'
+export const MethodShareToStory = 'web_app_share_to_story'
 
 export enum Method {
 	InvokeCustomMethod = MethodInvokeCustomMethod,
@@ -56,6 +57,7 @@ export enum Method {
 	SwitchInlineQuery = MethodSwitchInlineQuery,
 	TriggerHapticFeedback = MethodTriggerHapticFeedback,
 	SetupSwipeBehavior = MethodSetupSwipeBehavior,
+	ShareToStory = MethodShareToStory,
 }
 
 export type PopupButton = {
@@ -310,5 +312,20 @@ export type SenderData = {
 		  }
 	[MethodSetupSwipeBehavior]: {
 		allow_vertical_swipe: boolean
+	}
+
+	[MethodShareToStory]: {
+		media: string
+		text?: string
+		widget_link?: {
+			/**
+			 * The URL to be included in the story.
+			 */
+			url: string
+			/**
+			 * Optional. The name to be displayed for the widget link, 0-48 characters.
+			 */
+			name: string
+		}
 	}
 }

@@ -107,6 +107,10 @@ export {
 	default as bridgeSetupSwipeBehavior,
 	supportSetupSwipeBehavior,
 } from './methods/setupSwipeBehavior'
+export {
+	default as bridgeShareToStory,
+	supportShareToStory,
+} from './methods/shareToStory'
 
 export {
 	default as bridgeGetInitData,
@@ -170,6 +174,7 @@ export {
 	MethodSwitchInlineQuery,
 	MethodTriggerHapticFeedback,
 	MethodSetupSwipeBehavior,
+	MethodShareToStory,
 	type SenderData,
 	type PopupButton,
 	Method,

@@ -4,7 +4,7 @@ import { JSX } from 'solid-js/jsx-runtime';
 
 declare const createIsViewportChanged: () => solid_js.Accessor<{
     height: number;
-    width?: number | undefined;
+    width?: number;
     is_expanded: boolean;
     is_state_stable: boolean;
 }>;
@@ -200,6 +200,12 @@ type SetupSwipeBehavior = (eventData: SenderData[typeof MethodSetupSwipeBehavior
 declare const setupSwipeBehavior: SetupSwipeBehavior;
 declare const supportSetupSwipeBehavior: () => boolean;
 
+type ShareToStory = (eventData?: SenderData[typeof MethodShareToStory]) => {
+    status: boolean | typeof NOT_SUPPORTED;
+};
+declare const shareToStory: ShareToStory;
+declare const supportShareToStory: () => boolean;
+
 type User = {
     added_to_attachment_menu?: boolean;
     allows_write_to_pm?: boolean;
@@ -255,6 +261,88 @@ declare const getThemeParams: (theme_params?: ThemeParams) => ThemeParams;
 type Sender = (eventType: string, eventData?: any) => void;
 declare const sender: Sender;
 
+type GetPlatform = () => 'phone' | 'web' | 'desktop';
+declare const TG_WEB = "web";
+declare const TG_PHONE = "phone";
+declare const TG_DESKTOP = "desktop";
+declare const getPlatform: GetPlatform;
+
+declare const NOT_SUPPORTED = "not_supported";
+
+type EventsData = {
+    back_button_pressed: undefined;
+    clipboard_text_received: {
+        req_id: string;
+        data?: string | null;
+    };
+    custom_method_invoked: {
+        req_id: string;
+        result?: unknown;
+        error?: string;
+    };
+    invoice_closed: {
+        slug: string;
+        status: 'paid' | 'failed' | 'pending' | 'cancelled';
+    };
+    main_button_pressed: undefined;
+    phone_requested: {
+        status: 'sent';
+    };
+    popup_closed: {
+        button_id?: string;
+    };
+    reload_iframe: undefined;
+    qr_text_received: {
+        data?: string;
+    };
+    scan_qr_popup_closed: undefined;
+    set_custom_style: undefined;
+    settings_button_pressed: undefined;
+    theme_changed: {
+        theme_params: ThemeParams;
+    };
+    viewport_changed: {
+        height: number;
+        width?: number;
+        is_expanded: boolean;
+        is_state_stable: boolean;
+    };
+    write_access_requested: {
+        status: 'allowed';
+    };
+};
+interface TelegramGameProxy {
+    receiveEvent: (event: string, data: string) => void;
+}
+interface TelegramWebviewProxy {
+    postEvent: (event: string, data: string) => void;
+}
+declare global {
+    interface External {
+        notify: (event: string) => void;
+    }
+    interface Window {
+        TelegramWebviewProxy: TelegramWebviewProxy;
+        TelegramGameProxy: TelegramGameProxy;
+        TelegramGameProxy_receiveEvent: TelegramGameProxy['receiveEvent'];
+        Telegram: {
+            WebView: TelegramGameProxy;
+        };
+    }
+}
+type Listened = <T extends EventsData, E extends keyof T, D extends T[E]>(eventName: E, callback: (eventData: D) => void) => void;
+declare const on: Listened;
+declare const off: Listened;
+declare const once: Listened;
+
+type listener_EventsData = EventsData;
+declare const listener_off: typeof off;
+declare const listener_on: typeof on;
+declare const listener_once: typeof once;
+declare namespace listener {
+  export { type listener_EventsData as EventsData, listener_off as off, listener_on as on, listener_once as once };
+}
+
 declare const MethodInvokeCustomMethod = "web_app_invoke_custom_method";
 declare const MethodOpenScanQrPopup = "web_app_open_scan_qr_popup";
 declare const MethodReadTextFromClipboard = "web_app_read_text_from_clipboard";
@@ -283,6 +371,7 @@ declare const MethodSetupSettingsButton = "web_app_setup_settings_button";
 declare const MethodSwitchInlineQuery = "web_app_switch_inline_query";
 declare const MethodTriggerHapticFeedback = "web_app_trigger_haptic_feedback";
 declare const MethodSetupSwipeBehavior = "web_app_setup_swipe_behavior";
+declare const MethodShareToStory = "web_app_share_to_story";
 declare enum Method {
     InvokeCustomMethod = "web_app_invoke_custom_method",
     OpenScanQrPopup = "web_app_open_scan_qr_popup",
@@ -311,7 +400,8 @@ declare enum Method {
     SetupSettingsButton = "web_app_setup_settings_button",
     SwitchInlineQuery = "web_app_switch_inline_query",
     TriggerHapticFeedback = "web_app_trigger_haptic_feedback",
-    SetupSwipeBehavior = "web_app_setup_swipe_behavior"
+    SetupSwipeBehavior = "web_app_setup_swipe_behavior",
+    ShareToStory = "web_app_share_to_story"
 }
 type PopupButton = {
     id: string;
@@ -413,92 +503,18 @@ type SenderData = {
     [MethodSetupSwipeBehavior]: {
         allow_vertical_swipe: boolean;
     };
+    [MethodShareToStory]: {
+        media: string;
+        text?: string;
+        widget_link?: {
+            url: string;
+            name: string;
+        };
+    };
 };
 
 type Debug = (methondName: string, errorId: number) => void;
 declare const debug: Debug;
-
-type GetPlatform = () => 'phone' | 'web' | 'desktop';
-declare const TG_WEB = "web";
-declare const TG_PHONE = "phone";
-declare const TG_DESKTOP = "desktop";
-declare const getPlatform: GetPlatform;
-
-declare const NOT_SUPPORTED = "not_supported";
-
-type EventsData = {
-    back_button_pressed: undefined;
-    clipboard_text_received: {
-        req_id: string;
-        data?: string | null;
-    };
-    custom_method_invoked: {
-        req_id: string;
-        result?: unknown;
-        error?: string;
-    };
-    invoice_closed: {
-        slug: string;
-        status: 'paid' | 'failed' | 'pending' | 'cancelled';
-    };
-    main_button_pressed: undefined;
-    phone_requested: {
-        status: 'sent';
-    };
-    popup_closed: {
-        button_id?: string;
-    };
-    reload_iframe: undefined;
-    qr_text_received: {
-        data?: string;
-    };
-    scan_qr_popup_closed: undefined;
-    set_custom_style: undefined;
-    settings_button_pressed: undefined;
-    theme_changed: {
-        theme_params: ThemeParams;
-    };
-    viewport_changed: {
-        height: number;
-        width?: number;
-        is_expanded: boolean;
-        is_state_stable: boolean;
-    };
-    write_access_requested: {
-        status: 'allowed';
-    };
-};
-interface TelegramGameProxy {
-    receiveEvent: (event: string, data: string) => void;
-}
-interface TelegramWebviewProxy {
-    postEvent: (event: string, data: string) => void;
-}
-declare global {
-    interface External {
-        notify: (event: string) => void;
-    }
-    interface Window {
-        TelegramWebviewProxy: TelegramWebviewProxy;
-        TelegramGameProxy: TelegramGameProxy;
-        TelegramGameProxy_receiveEvent: TelegramGameProxy['receiveEvent'];
-        Telegram: {
-            WebView: TelegramGameProxy;
-        };
-    }
-}
-type Listened = <T extends EventsData, E extends keyof T, D extends T[E]>(eventName: E, callback: (eventData: D) => void) => void;
-declare const on: Listened;
-declare const off: Listened;
-declare const once: Listened;
-
-type listener_EventsData = EventsData;
-declare const listener_off: typeof off;
-declare const listener_on: typeof on;
-declare const listener_once: typeof once;
-declare namespace listener {
-  export { type listener_EventsData as EventsData, listener_off as off, listener_on as on, listener_once as once };
-}
 
 declare const getAppData: () => string | null;
 
@@ -530,4 +546,4 @@ declare const EventThemeChanged = "theme_changed";
 declare const EventViewportChanged = "viewport_changed";
 declare const EventWriteAccessRequested = "write_access_requested";
 
-export { ContextTwa, EventBackButtonPressed, EventClipboardTextReceived, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, type GetInitData, Method, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestPhone, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetBottomBarColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSetupSwipeBehavior, MethodSwitchInlineQuery, MethodTriggerHapticFeedback, NOT_SUPPORTED, type PopupButton, ProviderTWA, type SenderData, TG_DESKTOP, TG_PHONE, TG_WEB, type ThemeParams, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, getThemeParams as bridgeGetThemeParams, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sender as bridgeSend, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setBottomBarColor as bridgeSetBottomBarColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, setupSwipeBehavior as bridgeSetupSwipeBehavior, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, getAppData, getPlatform, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetBottomBarColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSetupSwipeBehavior, supportSwitchInlineQuery, supportTriggerHapticFeedback };
+export { ContextTwa, EventBackButtonPressed, EventClipboardTextReceived, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, type GetInitData, Method, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestPhone, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetBottomBarColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSetupSwipeBehavior, MethodShareToStory, MethodSwitchInlineQuery, MethodTriggerHapticFeedback, NOT_SUPPORTED, type PopupButton, ProviderTWA, type SenderData, TG_DESKTOP, TG_PHONE, TG_WEB, type ThemeParams, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, getThemeParams as bridgeGetThemeParams, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestPhone as bridgeRequestPhone, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sender as bridgeSend, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setBottomBarColor as bridgeSetBottomBarColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupMainButton as bridgeSetupMainButton, setupSettingsButton as bridgeSetupSettingsButton, setupSwipeBehavior as bridgeSetupSwipeBehavior, shareToStory as bridgeShareToStory, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, getAppData, getPlatform, listener, sender, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestPhone, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetBottomBarColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupMainButton, supportSetupSettingsButton, supportSetupSwipeBehavior, supportShareToStory, supportSwitchInlineQuery, supportTriggerHapticFeedback };

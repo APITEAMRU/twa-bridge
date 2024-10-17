@@ -101,8 +101,6 @@ const getThemeParams = (theme_params?: ThemeParams) => {
 		colorTheme.secondary_bg_color = '#2c2c2e'
 	}
 
-	colorTheme.bottom_bar_bg_color
-
 	return colorTheme
 }
 
