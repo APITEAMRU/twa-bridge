@@ -1,4 +1,4 @@
-import { EventThemeChanged } from '../src/types/events'
+import { EventCheckHomeScreen, EventThemeChanged } from '../src/types/events'
 import { getThemeParams, ThemeParams } from './utils'
 
 type EventDispatch<D> = (data: D) => void
@@ -225,6 +225,17 @@ export type EventsData = {
 		 * Request status. Can only be allowed.
 		 */
 		status: 'allowed'
+	}
+
+	[EventCheckHomeScreen]: {
+		/**
+		 * Possible values for status are:
+		- **unsupported** – the feature is not supported, and it is not possible to add the icon to the home screen,
+ 		- **unknown** – the feature is supported, and the icon can be added, but it is not possible to determine if the icon has already been added,
+		- **added** – the icon has already been added to the home screen,
+		- **missed** – the icon has not been added to the home screen.
+		 */
+		status: 'unsupported' | 'unknown' | 'added' | 'missed'
 	}
 }
 

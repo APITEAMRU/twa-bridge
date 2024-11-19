@@ -27,6 +27,15 @@ export const MethodSwitchInlineQuery = 'web_app_switch_inline_query'
 export const MethodTriggerHapticFeedback = 'web_app_trigger_haptic_feedback'
 export const MethodSetupSwipeBehavior = 'web_app_setup_swipe_behavior'
 export const MethodShareToStory = 'web_app_share_to_story'
+export const MethodRequestSafeArea = 'web_app_request_safe_area'
+export const MethodRequestContentSafeArea = 'web_app_request_content_safe_area'
+
+export const MethodRequestFullscreen = 'web_app_request_fullscreen'
+export const MethodExitFullscreen = 'web_app_exit_fullscreen'
+
+export const MethodToggleOrientationLock = 'web_app_toggle_orientation_lock'
+export const MethodAddToHomeScreen = 'web_app_add_to_home_screen'
+export const MethodCheckHomeScreen = 'web_app_check_home_screen'
 
 export enum Method {
 	InvokeCustomMethod = MethodInvokeCustomMethod,
@@ -58,6 +67,13 @@ export enum Method {
 	TriggerHapticFeedback = MethodTriggerHapticFeedback,
 	SetupSwipeBehavior = MethodSetupSwipeBehavior,
 	ShareToStory = MethodShareToStory,
+	RequestSafeArea = MethodRequestSafeArea,
+	RequestContentSafeArea = MethodRequestContentSafeArea,
+	RequestFullscreen = MethodRequestFullscreen,
+	ExitFullscreen = MethodExitFullscreen,
+	ToggleOrientationLock = MethodToggleOrientationLock,
+	AddToHomeScreen = MethodAddToHomeScreen,
+	CheckHomeScreen = MethodCheckHomeScreen,
 }
 
 export type PopupButton = {
@@ -328,4 +344,19 @@ export type SenderData = {
 			name: string
 		}
 	}
+	[MethodRequestSafeArea]: undefined
+	[MethodRequestContentSafeArea]: undefined
+	[MethodRequestFullscreen]: {
+		is_full: boolean
+	}
+	[MethodExitFullscreen]: {
+		is_full: boolean
+	}
+
+	[MethodToggleOrientationLock]: {
+		locked: boolean
+	}
+
+	[MethodAddToHomeScreen]: undefined
+	[MethodCheckHomeScreen]: undefined
 }

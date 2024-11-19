@@ -111,6 +111,30 @@ export {
 	default as bridgeShareToStory,
 	supportShareToStory,
 } from './methods/shareToStory'
+export {
+	default as bridgeCheckHomeScreen,
+	supportCheckHomeScreen,
+} from './methods/checkHomeScreen/checkHomeScreen'
+export {
+	default as bridgeAddToHomeScreen,
+	supportAddToHomeScreen,
+} from './methods/addToHomeScreen'
+export {
+	default as bridgeRequestSafeAreaInset,
+	supportRequestSafeAreaInset,
+} from './methods/requestSafeAreaInset'
+export {
+	default as bridgeRequestContentSafeAreaInset,
+	supportRequestContentSafeAreaInset,
+} from './methods/requestContentSafeAreaInset'
+export {
+	default as bridgeSetupFullScreen,
+	supportSetupFullScreen,
+} from './methods/setupFullScreen'
+export {
+	default as bridgeSetupOrientation,
+	supportSetupOrientation,
+} from './methods/setupOrientation'
 
 export {
 	default as bridgeGetInitData,
@@ -175,6 +199,13 @@ export {
 	MethodTriggerHapticFeedback,
 	MethodSetupSwipeBehavior,
 	MethodShareToStory,
+	MethodRequestSafeArea,
+	MethodRequestContentSafeArea,
+	MethodRequestFullscreen,
+	MethodExitFullscreen,
+	MethodToggleOrientationLock,
+	MethodAddToHomeScreen,
+	MethodCheckHomeScreen,
 	type SenderData,
 	type PopupButton,
 	Method,
@@ -196,4 +227,7 @@ export {
 	EventThemeChanged,
 	EventViewportChanged,
 	EventWriteAccessRequested,
+	EventSafeAreaChanged,
+	EventContentSafeAreaChanged,
+	EventCheckHomeScreen,
 } from '../types/events'
