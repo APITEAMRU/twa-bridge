@@ -1,5 +1,6 @@
 import {
 	EventCheckHomeScreen,
+	EventContentSafeAreaChanged,
 	EventSafeAreaChanged,
 	EventThemeChanged,
 } from '../src/types/events'
@@ -242,6 +243,12 @@ export type EventsData = {
 		status: 'unsupported' | 'unknown' | 'added' | 'missed'
 	}
 	[EventSafeAreaChanged]: {
+		top: number
+		bottom: number
+		left: number
+		right: number
+	}
+	[EventContentSafeAreaChanged]: {
 		top: number
 		bottom: number
 		left: number

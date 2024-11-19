@@ -375,6 +375,12 @@ type EventsData = {
         left: number;
         right: number;
     };
+    [EventContentSafeAreaChanged]: {
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+    };
 };
 interface TelegramGameProxy {
     receiveEvent: (event: string, data: string) => void;
