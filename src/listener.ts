@@ -1,4 +1,8 @@
-import { EventCheckHomeScreen, EventThemeChanged } from '../src/types/events'
+import {
+	EventCheckHomeScreen,
+	EventSafeAreaChanged,
+	EventThemeChanged,
+} from '../src/types/events'
 import { getThemeParams, ThemeParams } from './utils'
 
 type EventDispatch<D> = (data: D) => void
@@ -236,6 +240,12 @@ export type EventsData = {
 		- **missed** – the icon has not been added to the home screen.
 		 */
 		status: 'unsupported' | 'unknown' | 'added' | 'missed'
+	}
+	[EventSafeAreaChanged]: {
+		top: number
+		bottom: number
+		left: number
+		right: number
 	}
 }
 

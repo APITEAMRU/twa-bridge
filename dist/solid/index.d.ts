@@ -369,6 +369,12 @@ type EventsData = {
     [EventCheckHomeScreen]: {
         status: 'unsupported' | 'unknown' | 'added' | 'missed';
     };
+    [EventSafeAreaChanged]: {
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+    };
 };
 interface TelegramGameProxy {
     receiveEvent: (event: string, data: string) => void;
