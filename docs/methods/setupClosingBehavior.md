@@ -1,14 +1,18 @@
-## Метод `setupClosingBehavior`
-### web_app_setup_closing_behavior
+---
+description: >-
+  Метод, который устанавливает цвет заголовка приложения в формате #RRGGBB. Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
+---
 
-### Описание
-Метод, который устанавливает цвет заголовка приложения в формате #RRGGBB.
-Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
+## setupClosingBehavior
 
-### Требования
+{% hint style="info" %}
+### web\_app\_setup\_closing\_behavior
+{% endhint %}
+
+### Поддержка
+
 Минимальная версия Telegram API: 6.2+
 
-### Поддержка платформ
 - Telegram Web
 - Telegram Desktop
 - Telegram Mobile (iOS/Android)

@@ -21,7 +21,6 @@ description: >-
 ## Использование
 
 ```javascript
-// Использование системного цвета
 bridgeOpenLink({ url: "https://t.me/apiteamru" })
 ```
 

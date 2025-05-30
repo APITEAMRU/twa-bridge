@@ -22,14 +22,14 @@ type SwitchInlineQuery = (
  * [EN]
  * Method that inserts the bot username and the specified inline query into the current chat's input field.
  * Query may be empty, in which case only the bot username will be inserted.
- * If the optional "choose_chat_types" parameter was passed, the client prompts the user to select the current chat, then opens that chat and enters the bot username and the specified inline query into the input field.
+ * If the optional "chat_types" parameter was passed, the client prompts the user to select the current chat, then opens that chat and enters the bot username and the specified inline query into the input field.
  * You can specify which chat types the user selects.
  * This can be one or more of the following types: `users`, `bots`, `groups`, `channels`.
  *
  * [RU]
  * Метод, который вставляет имя пользователя бота и указанный встроенный запрос в поле ввода текущего чата.
  * Запрос может быть пустым, в этом случае будет вставлено только имя пользователя бота.
- * Если был передан необязательный параметр `choose_chat_types`, клиент предлагает пользователю выбрать определенный чат, затем открывает этот чат и вставляет имя пользователя бота и указанный встроенный запрос в поле ввода.
+ * Если был передан необязательный параметр `chat_types`, клиент предлагает пользователю выбрать определенный чат, затем открывает этот чат и вставляет имя пользователя бота и указанный встроенный запрос в поле ввода.
  * Вы можете указать, какие типы чатов пользователь сможет выбирать.
  * Это может быть один или несколько из следующих типов: `users`, `bots`, `groups`, `channels`.
  */

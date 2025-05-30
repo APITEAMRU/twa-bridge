@@ -1,14 +1,18 @@
+---
+description: >-
+  Метод, который устанавливает цвет фона приложения в формате #RRGGBB. Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
+---
+
 ## Метод `setBackgroundColor`
-### web_app_set_background_color
 
-### Описание
-Метод, который устанавливает цвет фона приложения в формате #RRGGBB.
-Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
+{% hint style="info" %}
+### web\_app\_set\_background\_color
+{% endhint %}
 
-### Требования
+### Поддержка
+
 Минимальная версия Telegram API: 6.1+
 
-### Поддержка платформ
 - Telegram Web
 - Telegram Desktop
 - Telegram Mobile (iOS/Android)

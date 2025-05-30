@@ -1,14 +1,18 @@
-## Метод `setHeaderColor`
-### web_app_set_header_color
+---
+description: >-
+  Метод, который устанавливает цвет заголовка приложения в формате #RRGGBB. Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
+---
 
-### Описание
-Метод, который устанавливает цвет заголовка приложения в формате #RRGGBB.
-Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
+## setHeaderColor
 
-### Требования
-Минимальная версия Telegram API: 6.1+
+{% hint style="info" %}
+### web\_app\_setup\_closing\_behavior
+{% endhint %}
 
 ### Поддержка платформ
+
+Минимальная версия Telegram API: 6.1+
+
 - Telegram Web
 - Telegram Desktop
 - Telegram Mobile (iOS/Android)

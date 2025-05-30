@@ -25,7 +25,7 @@ type CheckHomeScreen = (
  *
  * [EN]
  * A method that checks if adding to the home screen is supported and if the Mini App has already been added.
- * If an optional callback parameter is provided, the callback function will be called with a single argument status, which is a string indicating the home screen status. Possible values for status are:
+ * Possible values for status are:
  *
  * `unsupported` – the feature is not supported, and it is not possible to add the icon to the home screen,
  *
@@ -37,7 +37,7 @@ type CheckHomeScreen = (
  *
  * [RU]
  * Метод, который проверяет, поддерживается ли добавление на главный экран и добавлено ли уже мини-приложение.
- * Если указан необязательный параметр обратного вызова, функция обратного вызова будет вызвана с одним аргументом status, который представляет собой строку, указывающую статус главного экрана. Возможные значения для status:
+ * Возможные значения для status:
  *
  * `unsupported` — функция не поддерживается, и невозможно добавить значок на главный экран,
  *

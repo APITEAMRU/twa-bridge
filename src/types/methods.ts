@@ -193,7 +193,7 @@ export type SenderData = {
 	}
 	[MethodOpenTgLink]: {
 		/**
-		 * 	Should be a value taken from the link of this format: https://t.me/{path_full}.
+		 * Should be a value taken from the link of this format: https://t.me/{path_full}.
 		 *
 		 * Can additionally contain query parameters.
 		 */
@@ -366,7 +366,7 @@ export type SenderData = {
 			/**
 			 * Optional. The name to be displayed for the widget link, 0-48 characters.
 			 */
-			name: string
+			name?: string
 		}
 	}
 	[MethodRequestSafeArea]: undefined
