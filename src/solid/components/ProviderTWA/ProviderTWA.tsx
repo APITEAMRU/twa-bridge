@@ -8,14 +8,13 @@ import {
 	bridgeGetInitData,
 } from '../../index'
 import {
-	Component,
+	type JSX,
+	type Component,
 	createContext,
-	onMount,
 	onCleanup,
 	Context,
 	createEffect,
 } from 'solid-js'
-import { JSX } from 'solid-js/jsx-runtime'
 import { createStore } from 'solid-js/store'
 
 type Value = {
@@ -53,15 +52,7 @@ const ProviderTWA: Component<ProviderTWA> = props => {
 			}
 		) => {
 			onInitData()
-			setStore('viewport', {
-				...eventData,
-				...{
-					safe_area_bottom:
-						eventData.is_expanded && eventData.is_state_stable
-							? window.outerHeight - eventData.height
-							: 0,
-				},
-			})
+			setStore('viewport', eventData)
 		}
 
 		listener.on(EventViewportChanged, onRequestViewport)

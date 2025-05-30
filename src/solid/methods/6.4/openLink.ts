@@ -7,18 +7,20 @@ import {
 	debug,
 	MethodOpenLink,
 	SenderData,
-} from '../index'
-import { supportCheck } from '../../utils'
+} from '../../index'
+import { supportCheck } from '../../../utils'
 
 type OpenLink = (eventData: SenderData[typeof MethodOpenLink]) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 /**
- * Opens link in the default browser.
+ * Version [6.4]
  *
- * Mini App will not be closed.
+ * [EN]
+ * Method that opens the link in an external browser. The widget will not be closed.
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-open-link
+ * [RU]
+ * Метод, который открывает ссылку во внешнем браузере. Мини-приложение не будет закрыто.
  */
 const openLink: OpenLink = eventData => {
 	if (!supportOpenLink()) {

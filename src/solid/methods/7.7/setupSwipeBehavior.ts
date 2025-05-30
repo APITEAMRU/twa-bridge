@@ -7,8 +7,8 @@ import {
 	TG_WEB,
 	debug,
 	sender,
-} from '../index'
-import { supportCheck } from '../../utils'
+} from '../../index'
+import { supportCheck } from '../../../utils'
 
 type SetupSwipeBehavior = (
 	eventData: SenderData[typeof MethodSetupSwipeBehavior]
@@ -17,7 +17,13 @@ type SetupSwipeBehavior = (
 }
 
 /**
- * sessions storage set.
+ * Version [7.7]
+ *
+ * [EN]
+ * A method that enables/disables vertical swipes for closing or minimizing the Mini App.
+ *
+ * [RU]
+ * Метод, который включает и выключает вертикальные свайпы для закрытия или сворачивания Mini App.
  */
 const setupSwipeBehavior: SetupSwipeBehavior = eventData => {
 	if (!supportSetupSwipeBehavior()) {

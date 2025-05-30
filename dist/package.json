@@ -1,6 +1,6 @@
 {
   "name": "@apiteam/twa-bridge",
-  "version": "8.0.2-beta",
+  "version": "8.0.4",
   "description": "Telegram bridge",
   "license": "MIT",
   "types": "index.ts",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/APITEAMRU/twa-bridge"
+    "url": "git+https://github.com/APITEAMRU/twa-bridge.git"
   },
   "contributors": [],
   "keywords": [

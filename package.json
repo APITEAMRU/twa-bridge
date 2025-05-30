@@ -22,7 +22,7 @@
     "rollup-plugin-dts": "latest",
     "rollup-plugin-esbuild": "^6.1.1",
     "run-script-os": "^1.1.6",
-    "solid-js": "^1.7.12",
+    "solid-js": "^1.9.7",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "latest",

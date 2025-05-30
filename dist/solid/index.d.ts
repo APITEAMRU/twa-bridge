@@ -1,6 +1,5 @@
 import * as solid_js from 'solid-js';
-import { Context, Component } from 'solid-js';
-import { JSX } from 'solid-js/jsx-runtime';
+import { Context, JSX, Component } from 'solid-js';
 
 declare const createIsViewportChanged: () => solid_js.Accessor<{
     height: number;
@@ -202,6 +201,7 @@ declare const supportSetupSwipeBehavior: () => boolean;
 
 type ShareToStory = (eventData?: SenderData[typeof MethodShareToStory]) => {
     status: boolean | typeof NOT_SUPPORTED;
+    error_id?: number;
 };
 declare const shareToStory: ShareToStory;
 declare const supportShareToStory: () => boolean;
@@ -242,6 +242,30 @@ type SetupOrientation = (eventData?: SenderData[typeof MethodToggleOrientationLo
 };
 declare const setupOrientation: SetupOrientation;
 declare const supportSetupOrientation: () => boolean;
+
+type RequestEmojiStatus = (eventData?: SenderData[typeof MethodRequestEmojiStatusAccess]) => Promise<{
+    status: boolean | typeof NOT_SUPPORTED;
+}>;
+declare const requestEmojiStatus: RequestEmojiStatus;
+declare const supportRequestEmojiStatus: () => boolean;
+
+type SetEmojiStatus = (eventData?: SenderData[typeof MethodSetEmojiStatus]) => Promise<{
+    status: boolean | typeof NOT_SUPPORTED;
+}>;
+declare const setEmojiStatus: SetEmojiStatus;
+declare const supportSetEmojiStatus: () => boolean;
+
+type ShareMessage = (eventData?: SenderData[typeof MethodSendPreparedMessage]) => Promise<{
+    status: boolean | typeof NOT_SUPPORTED;
+}>;
+declare const shareMessage: ShareMessage;
+declare const supportShareMessage: () => boolean;
+
+type DownloadFile = (eventData?: SenderData[typeof MethodRequestFileDownload]) => Promise<{
+    status: boolean | typeof NOT_SUPPORTED;
+}>;
+declare const downloadFile: DownloadFile;
+declare const supportDownloadFile: () => boolean;
 
 type User = {
     added_to_attachment_menu?: boolean;
@@ -316,6 +340,12 @@ declare const EventWriteAccessRequested = "write_access_requested";
 declare const EventSafeAreaChanged = "safe_area_changed";
 declare const EventContentSafeAreaChanged = "content_safe_area_changed";
 declare const EventCheckHomeScreen = "web_app_check_home_screen";
+declare const EventPreparedMessageSent = "prepared_message_sent";
+declare const EventPreparedMessageFailed = "prepared_message_failed";
+declare const EventEmojiStatusSet = "emoji_status_set";
+declare const EventEmojiStatusFailed = "emoji_status_failed";
+declare const EventEmojiStatusAccessRequested = "emoji_status_access_requested";
+declare const EventFileDownloadRequested = "file_download_requested";
 
 type GetPlatform = () => 'phone' | 'web' | 'desktop';
 declare const TG_WEB = "web";
@@ -380,6 +410,16 @@ type EventsData = {
         bottom: number;
         left: number;
         right: number;
+    };
+    [EventPreparedMessageSent]: undefined;
+    [EventPreparedMessageFailed]: undefined;
+    [EventEmojiStatusSet]: undefined;
+    [EventEmojiStatusFailed]: undefined;
+    [EventEmojiStatusAccessRequested]: {
+        status: 'allowed';
+    };
+    [EventFileDownloadRequested]: {
+        status: 'downloading';
     };
 };
 interface TelegramGameProxy {
@@ -450,6 +490,10 @@ declare const MethodExitFullscreen = "web_app_exit_fullscreen";
 declare const MethodToggleOrientationLock = "web_app_toggle_orientation_lock";
 declare const MethodAddToHomeScreen = "web_app_add_to_home_screen";
 declare const MethodCheckHomeScreen = "web_app_check_home_screen";
+declare const MethodSendPreparedMessage = "web_app_send_prepared_message";
+declare const MethodSetEmojiStatus = "web_app_set_emoji_status";
+declare const MethodRequestEmojiStatusAccess = "web_app_request_emoji_status_access";
+declare const MethodRequestFileDownload = "web_app_request_file_download";
 declare enum Method {
     InvokeCustomMethod = "web_app_invoke_custom_method",
     OpenScanQrPopup = "web_app_open_scan_qr_popup",
@@ -486,7 +530,11 @@ declare enum Method {
     ExitFullscreen = "web_app_exit_fullscreen",
     ToggleOrientationLock = "web_app_toggle_orientation_lock",
     AddToHomeScreen = "web_app_add_to_home_screen",
-    CheckHomeScreen = "web_app_check_home_screen"
+    CheckHomeScreen = "web_app_check_home_screen",
+    SendPreparedMessage = "web_app_send_prepared_message",
+    SetEmojiStatus = "web_app_set_emoji_status",
+    RequestEmojiStatusAccess = "web_app_request_emoji_status_access",
+    RequestFileDownload = "web_app_request_file_download"
 }
 type PopupButton = {
     id: string;
@@ -523,6 +571,7 @@ type SenderData = {
     [MethodOpenLink]: {
         url: string;
         try_instant_view?: boolean;
+        try_browser?: boolean;
     };
     [MethodOpenPopup]: {
         title: string;
@@ -531,6 +580,7 @@ type SenderData = {
     };
     [MethodOpenTgLink]: {
         path_full: string;
+        force_request?: boolean;
     };
     [MethodReady]: undefined;
     [MethodRequestTheme]: undefined;
@@ -572,7 +622,7 @@ type SenderData = {
     };
     [MethodSwitchInlineQuery]: {
         query: string;
-        chat_types: ['users', 'bots', 'groups', 'channels'];
+        chat_types: ('users' | 'bots' | 'groups' | 'channels')[];
     };
     [MethodTriggerHapticFeedback]: {
         type: 'impact';
@@ -609,6 +659,18 @@ type SenderData = {
     };
     [MethodAddToHomeScreen]: undefined;
     [MethodCheckHomeScreen]: undefined;
+    [MethodSendPreparedMessage]: {
+        msg_id: number;
+    };
+    [MethodSetEmojiStatus]: {
+        custom_emoji_id: string;
+        duration?: number;
+    };
+    [MethodRequestEmojiStatusAccess]: undefined;
+    [MethodRequestFileDownload]: {
+        url: string;
+        file_name: string;
+    };
 };
 
 type Debug = (methondName: string, errorId: number) => void;
@@ -628,4 +690,4 @@ interface ProviderTWA extends JSX.HTMLAttributes<HTMLDivElement> {
 }
 declare const ProviderTWA: Component<ProviderTWA>;
 
-export { ContextTwa, EventBackButtonPressed, EventCheckHomeScreen, EventClipboardTextReceived, EventContentSafeAreaChanged, EventCustomMethodInvoked, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventQrTextReceived, EventReloadIframe, EventSafeAreaChanged, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, type GetInitData, Method, MethodAddToHomeScreen, MethodCheckHomeScreen, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExitFullscreen, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestContentSafeArea, MethodRequestFullscreen, MethodRequestPhone, MethodRequestSafeArea, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSetBackgroundColor, MethodSetBottomBarColor, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSetupSwipeBehavior, MethodShareToStory, MethodSwitchInlineQuery, MethodToggleOrientationLock, MethodTriggerHapticFeedback, NOT_SUPPORTED, type PopupButton, ProviderTWA, type SenderData, TG_DESKTOP, TG_PHONE, TG_WEB, type ThemeParams, addToHomeScreen as bridgeAddToHomeScreen, checkHomeScreen as bridgeCheckHomeScreen, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, expand as bridgeExpand, getInitData as bridgeGetInitData, getThemeParams as bridgeGetThemeParams, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestContentSafeAreaInset as bridgeRequestContentSafeAreaInset, requestPhone as bridgeRequestPhone, requestSafeAreaInset as bridgeRequestSafeAreaInset, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sender as bridgeSend, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setBottomBarColor as bridgeSetBottomBarColor, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupFullScreen as bridgeSetupFullScreen, setupMainButton as bridgeSetupMainButton, setupOrientation as bridgeSetupOrientation, setupSettingsButton as bridgeSetupSettingsButton, setupSwipeBehavior as bridgeSetupSwipeBehavior, shareToStory as bridgeShareToStory, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, getAppData, getPlatform, listener, sender, supportAddToHomeScreen, supportCheckHomeScreen, supportClose, supportCloseScanQrPopup, supportDataSend, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestContentSafeAreaInset, supportRequestPhone, supportRequestSafeAreaInset, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetBottomBarColor, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupFullScreen, supportSetupMainButton, supportSetupOrientation, supportSetupSettingsButton, supportSetupSwipeBehavior, supportShareToStory, supportSwitchInlineQuery, supportTriggerHapticFeedback };
+export { ContextTwa, EventBackButtonPressed, EventCheckHomeScreen, EventClipboardTextReceived, EventContentSafeAreaChanged, EventCustomMethodInvoked, EventEmojiStatusAccessRequested, EventEmojiStatusFailed, EventEmojiStatusSet, EventFileDownloadRequested, EventInvoiceClosed, EventMainButtonPressed, EventPhoneRequested, EventPopupClosed, EventPreparedMessageFailed, EventPreparedMessageSent, EventQrTextReceived, EventReloadIframe, EventSafeAreaChanged, EventScanQrPopupClosed, EventSetCustomStyle, EventSettingsButtonPressed, EventThemeChanged, EventViewportChanged, EventWriteAccessRequested, type EventsData, type GetInitData, Method, MethodAddToHomeScreen, MethodCheckHomeScreen, MethodClose, MethodCloseScanQrPopup, MethodDataSend, MethodExitFullscreen, MethodExpand, MethodIframeReady, MethodIframeWillReload, MethodInvokeCustomMethod, MethodOpenInvoice, MethodOpenLink, MethodOpenPopup, MethodOpenScanQrPopup, MethodOpenTgLink, MethodReadTextFromClipboard, MethodReady, MethodRequestContentSafeArea, MethodRequestEmojiStatusAccess, MethodRequestFileDownload, MethodRequestFullscreen, MethodRequestPhone, MethodRequestSafeArea, MethodRequestTheme, MethodRequestViewport, MethodRequestWriteAccess, MethodSendPreparedMessage, MethodSetBackgroundColor, MethodSetBottomBarColor, MethodSetEmojiStatus, MethodSetHeaderColor, MethodSetupBackButton, MethodSetupClosingBehavior, MethodSetupMainButton, MethodSetupSettingsButton, MethodSetupSwipeBehavior, MethodShareToStory, MethodSwitchInlineQuery, MethodToggleOrientationLock, MethodTriggerHapticFeedback, NOT_SUPPORTED, type PopupButton, ProviderTWA, type SenderData, TG_DESKTOP, TG_PHONE, TG_WEB, type ThemeParams, addToHomeScreen as bridgeAddToHomeScreen, checkHomeScreen as bridgeCheckHomeScreen, close as bridgeClose, closeScanQrPopup as bridgeCloseScanQrPopup, dataSend as bridgeDataSend, downloadFile as bridgeDownloadFile, expand as bridgeExpand, getInitData as bridgeGetInitData, getThemeParams as bridgeGetThemeParams, iframeReady as bridgeIframeReady, iframeWillReload as bridgeIframeWillReload, invokeCustomMethod as bridgeInvokeCustomMethod, openInvoice as bridgeOpenInvoice, openLink as bridgeOpenLink, openPopup as bridgeOpenPopup, openScanQrPopup as bridgeOpenScanQrPopup, openTgLink as bridgeOpenTgLink, readTextFromClipboard as bridgeReadTextFromClipboard, ready as bridgeReady, requestContentSafeAreaInset as bridgeRequestContentSafeAreaInset, requestEmojiStatus as bridgeRequestEmojiStatus, requestPhone as bridgeRequestPhone, requestSafeAreaInset as bridgeRequestSafeAreaInset, requestTheme as bridgeRequestTheme, requestViewport as bridgeRequestViewport, requestWriteAccess as bridgeRequestWriteAccess, sender as bridgeSend, sessionStorageGet as bridgeSessionStorageGet, sessionStorageSet as bridgeSessionStorageSet, setBackgroundColor as bridgeSetBackgroundColor, setBottomBarColor as bridgeSetBottomBarColor, setEmojiStatus as bridgeSetEmojiStatus, setHeaderColor as bridgeSetHeaderColor, setupBackButton as bridgeSetupBackButton, setupClosingBehavior as bridgeSetupClosingBehavior, setupFullScreen as bridgeSetupFullScreen, setupMainButton as bridgeSetupMainButton, setupOrientation as bridgeSetupOrientation, setupSettingsButton as bridgeSetupSettingsButton, setupSwipeBehavior as bridgeSetupSwipeBehavior, shareMessage as bridgeShareMessage, shareToStory as bridgeShareToStory, switchInlineQuery as bridgeSwitchInlineQuery, triggerHapticFeedback as bridgeTriggerHapticFeedback, createIsViewportChanged, debug, getAppData, getPlatform, listener, sender, supportAddToHomeScreen, supportCheckHomeScreen, supportClose, supportCloseScanQrPopup, supportDataSend, supportDownloadFile, supportExpand, supportIframeReady, supportIframeWillReload, supportInvokeCustomMethod, supportOpenInvoice, supportOpenLink, supportOpenPopup, supportOpenScanQrPopup, supportOpenTgLink, supportReadTextFromClipboard, supportReady, supportRequestContentSafeAreaInset, supportRequestEmojiStatus, supportRequestPhone, supportRequestSafeAreaInset, supportRequestTheme, supportRequestViewport, supportRequestWriteAccess, supportSessionStorageGet, supportSessionStorageSet, supportSetBackgroundColor, supportSetBottomBarColor, supportSetEmojiStatus, supportSetHeaderColor, supportSetupBackButton, supportSetupClosingBehavior, supportSetupFullScreen, supportSetupMainButton, supportSetupOrientation, supportSetupSettingsButton, supportSetupSwipeBehavior, supportShareMessage, supportShareToStory, supportSwitchInlineQuery, supportTriggerHapticFeedback };

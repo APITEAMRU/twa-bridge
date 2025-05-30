@@ -7,8 +7,8 @@ import {
 	debug,
 	MethodSetBackgroundColor,
 	SenderData,
-} from '../index'
-import { supportCheck } from '../../utils'
+} from '../../index'
+import { supportCheck } from '../../../utils'
 
 type SetBackgroundColor = (
 	eventData: SenderData[typeof MethodSetBackgroundColor]
@@ -17,9 +17,15 @@ type SetBackgroundColor = (
 }
 
 /**
- * Updates the Mini App background color.
+ * Version [6.1]
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-set-background-color
+ * [EN]
+ * Method that sets the background color of the application in #RRGGBB format.
+ * You can also use the `bg_color` and `secondary_bg_color` keywords.
+ *
+ * [RU]
+ * Метод, который устанавливает цвет фона приложения в формате #RRGGBB.
+ * Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
  */
 const setBackgroundColor: SetBackgroundColor = eventData => {
 	if (!supportSetBackgroundColor()) {

@@ -24,7 +24,10 @@ export {
 	default as bridgeOpenInvoice,
 	supportOpenInvoice,
 } from './methods/openInvoice'
-export { default as bridgeOpenLink, supportOpenLink } from './methods/openLink'
+export {
+	default as bridgeOpenLink,
+	supportOpenLink,
+} from './methods/6.4/openLink'
 export {
 	default as bridgeOpenPopup,
 	supportOpenPopup,
@@ -36,7 +39,7 @@ export {
 export {
 	default as bridgeOpenTgLink,
 	supportOpenTgLink,
-} from './methods/openTgLink'
+} from './methods/7.0/openTgLink'
 export {
 	default as bridgeReadTextFromClipboard,
 	supportReadTextFromClipboard,
@@ -61,15 +64,15 @@ export {
 export {
 	default as bridgeSetBackgroundColor,
 	supportSetBackgroundColor,
-} from './methods/setBackgroundColor'
+} from './methods/6.1/setBackgroundColor'
 export {
 	default as bridgeSetHeaderColor,
 	supportSetHeaderColor,
-} from './methods/setHeaderColor'
+} from './methods/6.1/setHeaderColor'
 export {
 	default as bridgeSetBottomBarColor,
 	supportSetBottomBarColor,
-} from './methods/setBottomBarColor'
+} from './methods/7.10/setBottomBarColor'
 export {
 	default as bridgeSetupBackButton,
 	supportSetupBackButton,
@@ -77,7 +80,7 @@ export {
 export {
 	default as bridgeSetupClosingBehavior,
 	supportSetupClosingBehavior,
-} from './methods/setupClosingBehavior'
+} from './methods/6.2/setupClosingBehavior'
 export {
 	default as bridgeSetupMainButton,
 	supportSetupMainButton,
@@ -89,7 +92,7 @@ export {
 export {
 	default as bridgeSwitchInlineQuery,
 	supportSwitchInlineQuery,
-} from './methods/switchInlineQuery'
+} from './methods/6.7/switchInlineQuery'
 export {
 	default as bridgeTriggerHapticFeedback,
 	supportTriggerHapticFeedback,
@@ -106,19 +109,19 @@ export {
 export {
 	default as bridgeSetupSwipeBehavior,
 	supportSetupSwipeBehavior,
-} from './methods/setupSwipeBehavior'
+} from './methods/7.7/setupSwipeBehavior'
 export {
 	default as bridgeShareToStory,
 	supportShareToStory,
-} from './methods/shareToStory'
+} from './methods/7.8/shareToStory'
 export {
 	default as bridgeCheckHomeScreen,
 	supportCheckHomeScreen,
-} from './methods/checkHomeScreen/checkHomeScreen'
+} from './methods/8.0/checkHomeScreen/checkHomeScreen'
 export {
 	default as bridgeAddToHomeScreen,
 	supportAddToHomeScreen,
-} from './methods/addToHomeScreen'
+} from './methods/8.0/addToHomeScreen'
 export {
 	default as bridgeRequestSafeAreaInset,
 	supportRequestSafeAreaInset,
@@ -130,11 +133,27 @@ export {
 export {
 	default as bridgeSetupFullScreen,
 	supportSetupFullScreen,
-} from './methods/setupFullScreen'
+} from './methods/8.0/setupFullScreen'
 export {
 	default as bridgeSetupOrientation,
 	supportSetupOrientation,
-} from './methods/setupOrientation'
+} from './methods/8.0/setupOrientation'
+export {
+	default as bridgeRequestEmojiStatus,
+	supportRequestEmojiStatus,
+} from './methods/8.0/requestEmojiStatus/requestEmojiStatus'
+export {
+	default as bridgeSetEmojiStatus,
+	supportSetEmojiStatus,
+} from './methods/8.0/setEmojiStatus/setEmojiStatus'
+export {
+	default as bridgeShareMessage,
+	supportShareMessage,
+} from './methods/8.0/shareMessage/shareMessage'
+export {
+	default as bridgeDownloadFile,
+	supportDownloadFile,
+} from './methods/8.0/downloadFile/downloadFile'
 
 export {
 	default as bridgeGetInitData,
@@ -206,6 +225,10 @@ export {
 	MethodToggleOrientationLock,
 	MethodAddToHomeScreen,
 	MethodCheckHomeScreen,
+	MethodSendPreparedMessage,
+	MethodSetEmojiStatus,
+	MethodRequestEmojiStatusAccess,
+	MethodRequestFileDownload,
 	type SenderData,
 	type PopupButton,
 	Method,
@@ -230,4 +253,10 @@ export {
 	EventSafeAreaChanged,
 	EventContentSafeAreaChanged,
 	EventCheckHomeScreen,
+	EventPreparedMessageFailed,
+	EventPreparedMessageSent,
+	EventEmojiStatusSet,
+	EventEmojiStatusFailed,
+	EventEmojiStatusAccessRequested,
+	EventFileDownloadRequested,
 } from '../types/events'

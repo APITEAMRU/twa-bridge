@@ -37,6 +37,12 @@ export const MethodToggleOrientationLock = 'web_app_toggle_orientation_lock'
 export const MethodAddToHomeScreen = 'web_app_add_to_home_screen'
 export const MethodCheckHomeScreen = 'web_app_check_home_screen'
 
+export const MethodSendPreparedMessage = 'web_app_send_prepared_message'
+export const MethodSetEmojiStatus = 'web_app_set_emoji_status'
+export const MethodRequestEmojiStatusAccess =
+	'web_app_request_emoji_status_access'
+export const MethodRequestFileDownload = 'web_app_request_file_download'
+
 export enum Method {
 	InvokeCustomMethod = MethodInvokeCustomMethod,
 	OpenScanQrPopup = MethodOpenScanQrPopup,
@@ -74,6 +80,10 @@ export enum Method {
 	ToggleOrientationLock = MethodToggleOrientationLock,
 	AddToHomeScreen = MethodAddToHomeScreen,
 	CheckHomeScreen = MethodCheckHomeScreen,
+	SendPreparedMessage = MethodSendPreparedMessage,
+	SetEmojiStatus = MethodSetEmojiStatus,
+	RequestEmojiStatusAccess = MethodRequestEmojiStatusAccess,
+	RequestFileDownload = MethodRequestFileDownload,
 }
 
 export type PopupButton = {
@@ -155,9 +165,17 @@ export type SenderData = {
 		 */
 		url: string
 		/**
+		 * Version [6.4]
+		 *
 		 * Optional. Link will be opened in Instant View mode if possible.
 		 */
 		try_instant_view?: boolean
+		/**
+		 * Version [7.6]
+		 *
+		 * Optional. ADD_DESCRIPTION
+		 */
+		try_browser?: boolean
 	}
 	[MethodOpenPopup]: {
 		/**
@@ -180,6 +198,10 @@ export type SenderData = {
 		 * Can additionally contain query parameters.
 		 */
 		path_full: string
+		/**
+		 * Optional.
+		 */
+		force_request?: boolean
 	}
 	[MethodReady]: undefined
 	[MethodRequestTheme]: undefined
@@ -275,7 +297,7 @@ export type SenderData = {
 		 *
 		 * users, bots, groups, channels
 		 */
-		chat_types: ['users', 'bots', 'groups', 'channels']
+		chat_types: ('users' | 'bots' | 'groups' | 'channels')[]
 	}
 	[MethodTriggerHapticFeedback]:
 		| {
@@ -332,6 +354,9 @@ export type SenderData = {
 
 	[MethodShareToStory]: {
 		media: string
+		/**
+		 * Text which should be inserted in the input after the current bot name. Max length is 2048 symbols.
+		 */
 		text?: string
 		widget_link?: {
 			/**
@@ -359,4 +384,26 @@ export type SenderData = {
 
 	[MethodAddToHomeScreen]: undefined
 	[MethodCheckHomeScreen]: undefined
+
+	[MethodSendPreparedMessage]: {
+		msg_id: number
+	}
+	[MethodSetEmojiStatus]: {
+		custom_emoji_id: string
+		/**
+		 * Optional. The duration for which the status will remain set, in seconds.
+		 */
+		duration?: number
+	}
+	[MethodRequestEmojiStatusAccess]: undefined
+	[MethodRequestFileDownload]: {
+		/**
+		 * The HTTPS URL of the file to be downloaded.
+		 */
+		url: string
+		/**
+		 * The suggested name for the downloaded file.
+		 */
+		file_name: string
+	}
 }

@@ -7,17 +7,23 @@ import {
 	debug,
 	MethodSetHeaderColor,
 	SenderData,
-} from '../index'
-import { supportCheck } from '../../utils'
+} from '../../index'
+import { supportCheck } from '../../../utils'
 
 type SetHeaderColor = (eventData: SenderData[typeof MethodSetHeaderColor]) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 
 /**
- * Updates the Mini App header color. This method should accept color_key or color property.
+ * Version [6.1]
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-set-header-color
+ * [EN]
+ * A method that sets the app header color in the #RRGGBB format.
+ * You can also use keywords `bg_color` and `secondary_bg_color`.
+ *
+ * [RU]
+ * Метод, который устанавливает цвет заголовка приложения в формате #RRGGBB.
+ * Вы также можете использовать ключевые слова `bg_color` и `secondary_bg_color`.
  */
 const setHeaderColor: SetHeaderColor = eventData => {
 	if (!supportSetHeaderColor()) {

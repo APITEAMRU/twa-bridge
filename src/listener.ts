@@ -1,6 +1,12 @@
 import {
 	EventCheckHomeScreen,
 	EventContentSafeAreaChanged,
+	EventEmojiStatusAccessRequested,
+	EventEmojiStatusFailed,
+	EventEmojiStatusSet,
+	EventFileDownloadRequested,
+	EventPreparedMessageFailed,
+	EventPreparedMessageSent,
 	EventSafeAreaChanged,
 	EventThemeChanged,
 } from '../src/types/events'
@@ -253,6 +259,16 @@ export type EventsData = {
 		bottom: number
 		left: number
 		right: number
+	}
+	[EventPreparedMessageSent]: undefined
+	[EventPreparedMessageFailed]: undefined
+	[EventEmojiStatusSet]: undefined
+	[EventEmojiStatusFailed]: undefined
+	[EventEmojiStatusAccessRequested]: {
+		status: 'allowed'
+	}
+	[EventFileDownloadRequested]: {
+		status: 'downloading'
 	}
 }
 

@@ -7,8 +7,8 @@ import {
 	debug,
 	MethodSetupClosingBehavior,
 	SenderData,
-} from '../index'
-import { supportCheck } from '../../utils'
+} from '../../index'
+import { supportCheck } from '../../../utils'
 
 type SetupClosingBehavior = (
 	eventData: SenderData[typeof MethodSetupClosingBehavior]
@@ -17,9 +17,13 @@ type SetupClosingBehavior = (
 }
 
 /**
- * Updates current closing behavior.
+ * Version [6.2]
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-setup-closing-behavior
+ * [EN]
+ * Method to disable/enable the confirmation dialog while the user is trying to close the widget.
+ *
+ * [RU]
+ * Метод, отключающий/включающий диалоговое окно подтверждения, пока пользователь пытается закрыть мини-приложение.
  */
 const setupClosingBehavior: SetupClosingBehavior = eventData => {
 	if (!supportSetupClosingBehavior()) {
@@ -35,6 +39,6 @@ const setupClosingBehavior: SetupClosingBehavior = eventData => {
  * Method support check
  */
 export const supportSetupClosingBehavior = () =>
-	supportCheck(0, [TG_WEB, TG_DESKTOP, TG_PHONE])
+	supportCheck(6.2, [TG_WEB, TG_DESKTOP, TG_PHONE])
 
 export default setupClosingBehavior

@@ -15,11 +15,13 @@ type OpenInvoice = (eventData: SenderData[typeof MethodOpenInvoice]) => {
 }
 
 /**
- * Opens an invoice by its specified slug.
+ * Version [6.1]
  *
- * More information about invoices in this documentation.
+ * [EN]
+ * Method that opens an invoice using a url link.
  *
- * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-open-invoice
+ * [RU]
+ * Метод, который открывает счет-фактуру с помощью ссылки url.
  */
 const openInvoice: OpenInvoice = eventData => {
 	if (!supportOpenInvoice()) {
