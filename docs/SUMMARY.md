@@ -1,7 +1,7 @@
 # Table of contents
 
-* [Модуль Ядра](README.md)
-* [Методы](methods/README.md)
+* [Модуль Ядра](../)
+* [Методы](methods/)
   * [setBackgroundColor](methods/setBackgroundColor.md)
   * [setHeaderColor](methods/setHeaderColor.md)
   * [openLink](methods/openLink.md)
