@@ -643,7 +643,7 @@ type SenderData = {
         text?: string;
         widget_link?: {
             url: string;
-            name: string;
+            name?: string;
         };
     };
     [MethodRequestSafeArea]: undefined;
