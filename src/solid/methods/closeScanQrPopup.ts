@@ -15,12 +15,14 @@ type CloseScanQrPopup = (
 }
 
 /**
- * EN: A method that closes the native popup for scanning a QR code opened with the `openScanQrPopup` method.
+ * Version [6.4]
  *
+ * [EN]
+ * A method that closes the native popup for scanning a QR code opened with the `openScanQrPopup` method.
  * Run it if you received valid data in the event `qr_text_received`.
  *
- * RU: Метод, который закрывает собственное всплывающее окно для сканирования QR-кода, открытого с помощью метода `openScanQrPopup`.
- *
+ * [RU]
+ *  Метод, который закрывает собственное всплывающее окно для сканирования QR-кода, открытого с помощью метода `openScanQrPopup`.
  * Запустите его, если вы получили действительные данные в событии `qr_text_received`.
  */
 const closeScanQrPopup: CloseScanQrPopup = eventData => {
