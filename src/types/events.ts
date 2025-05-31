@@ -15,7 +15,6 @@ export const EventViewportChanged = 'viewport_changed'
 export const EventWriteAccessRequested = 'write_access_requested'
 export const EventSafeAreaChanged = 'safe_area_changed'
 export const EventContentSafeAreaChanged = 'content_safe_area_changed'
-export const EventCheckHomeScreen = 'web_app_check_home_screen'
 
 export const EventPreparedMessageSent = 'prepared_message_sent'
 export const EventPreparedMessageFailed = 'prepared_message_failed'
@@ -23,3 +22,36 @@ export const EventEmojiStatusSet = 'emoji_status_set'
 export const EventEmojiStatusFailed = 'emoji_status_failed'
 export const EventEmojiStatusAccessRequested = 'emoji_status_access_requested'
 export const EventFileDownloadRequested = 'file_download_requested'
+
+export const EventAccelerometerChanged = 'accelerometer_changed'
+export const EventAccelerometerFailed = 'accelerometer_failed'
+export const EventAccelerometerStarted = 'accelerometer_started'
+export const EventAccelerometerStopped = 'accelerometer_stopped'
+
+export const EventBiometryAuthRequested = 'biometry_auth_requested'
+export const EventBiometryInfoReceived = 'biometry_info_received'
+export const EventBiometryTokenUpdated = 'biometry_token_updated'
+
+export const EventDeviceOrientationChanged = 'device_orientation_changed'
+export const EventDeviceOrientationFailed = 'device_orientation_failed'
+export const EventDeviceOrientationStarted = 'device_orientation_started'
+export const EventDeviceOrientationStopped = 'device_orientation_stopped'
+
+export const EventFullscreenChanged = 'fullscreen_changed'
+export const EventFullscreenFailed = 'fullscreen_failed'
+
+export const EventGyroscopeChanged = 'gyroscope_changed'
+export const EventGyroscopeFailed = 'gyroscope_failed'
+export const EventGyroscopeStarted = 'gyroscope_started'
+export const EventGyroscopeStopped = 'gyroscope_stopped'
+
+export const EventHomeScreenAdded = 'home_screen_added'
+export const EventHomeScreenChecked = 'home_screen_checked'
+export const EventHomeScreenFailed = 'home_screen_failed'
+
+export const EventLocationChecked = 'location_checked'
+export const EventLocationRequested = 'location_requested'
+
+export const EventSecondaryButtonPressed = 'secondary_button_pressed'
+
+export const EventVisibilityChanged = 'visibility_changed'

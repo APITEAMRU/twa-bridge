@@ -1,5 +1,5 @@
 import {
-	EventCheckHomeScreen,
+	EventHomeScreenAdded,
 	EventContentSafeAreaChanged,
 	EventEmojiStatusAccessRequested,
 	EventEmojiStatusFailed,
@@ -9,6 +9,7 @@ import {
 	EventPreparedMessageSent,
 	EventSafeAreaChanged,
 	EventThemeChanged,
+	EventHomeScreenChecked,
 } from '../src/types/events'
 import { getThemeParams, ThemeParams } from './utils'
 
@@ -238,7 +239,7 @@ export type EventsData = {
 		status: 'allowed'
 	}
 
-	[EventCheckHomeScreen]: {
+	[EventHomeScreenChecked]: {
 		/**
 		 * Possible values for status are:
 		- **unsupported** – the feature is not supported, and it is not possible to add the icon to the home screen,

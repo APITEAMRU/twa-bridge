@@ -43,6 +43,24 @@ export const MethodRequestEmojiStatusAccess =
 	'web_app_request_emoji_status_access'
 export const MethodRequestFileDownload = 'web_app_request_file_download'
 
+export const MethodBiometryGetInfo = 'web_app_biometry_get_info'
+export const MethodBiometryOpenSettings = 'web_app_biometry_open_settings'
+export const MethodBiometryRequestAccess = 'web_app_biometry_request_access'
+export const MethodBiometryRequestAuth = 'web_app_biometry_request_auth'
+export const MethodBiometryUpdateToken = 'web_app_biometry_update_token'
+
+export const MethodCheckLocation = 'web_app_check_location'
+export const MethodOpenLocationSettings = 'web_app_open_location_settings'
+export const MethodRequestLocation = 'web_app_request_location'
+
+export const MethodStartAccelerometer = 'web_app_start_accelerometer'
+export const MethodStartDeviceOrientation = 'web_app_start_device_orientation'
+export const MethodStartGyroscope = 'web_app_start_gyroscope'
+export const MethodStopAccelerometer = 'web_app_stop_accelerometer'
+export const MethodStopDeviceOrientation = 'web_app_stop_device_orientation'
+export const MethodStopGyroscope = 'web_app_stop_gyroscope'
+export const MethodSetupSecondaryButton = 'web_app_setup_secondary_button'
+
 export enum Method {
 	InvokeCustomMethod = MethodInvokeCustomMethod,
 	OpenScanQrPopup = MethodOpenScanQrPopup,

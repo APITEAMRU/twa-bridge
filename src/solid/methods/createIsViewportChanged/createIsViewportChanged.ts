@@ -7,6 +7,10 @@ import {
 } from '../../index'
 import { createSignal, onCleanup, onMount } from 'solid-js'
 
+/**
+ *
+ * @deprecated
+ */
 export const createIsViewportChanged = () => {
 	const [viewportChanged, setViewportChanged] = createSignal<
 		EventsData[typeof EventViewportChanged]

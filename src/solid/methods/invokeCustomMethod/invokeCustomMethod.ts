@@ -21,6 +21,8 @@ type InvokeCustomMethod = (
 }>
 
 /**
+ * Version [6.9]
+ *
  * Original: https://docs.telegram-mini-apps.com/platform/apps-communication/methods#web-app-invoke-custom-method
  */
 const invokeCustomMethod: InvokeCustomMethod = async eventData => {

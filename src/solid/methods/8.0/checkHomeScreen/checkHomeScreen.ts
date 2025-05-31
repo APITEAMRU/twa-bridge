@@ -9,7 +9,7 @@ import {
 	EventsData,
 	SenderData,
 	MethodCheckHomeScreen,
-	EventCheckHomeScreen,
+	EventHomeScreenChecked,
 } from '../../../index'
 import { supportCheck } from '../../../../utils'
 
@@ -17,7 +17,7 @@ type CheckHomeScreen = (
 	eventData: SenderData[typeof MethodCheckHomeScreen]
 ) => Promise<{
 	status: boolean | typeof NOT_SUPPORTED
-	data?: EventsData[typeof EventCheckHomeScreen]
+	data?: EventsData[typeof EventHomeScreenChecked]
 }>
 
 /**
@@ -55,11 +55,12 @@ const checkHomeScreen: CheckHomeScreen = async eventData => {
 
 	sender(MethodCheckHomeScreen, eventData)
 	return new Promise((resolve, reject) => {
-		const callback = (data: EventsData[typeof EventCheckHomeScreen]) => {
+		const callback = (data: EventsData[typeof EventHomeScreenChecked]) => {
+			data.status = data.status || 'unknown'
 			resolve({ status: true, data })
-			listener.off(EventCheckHomeScreen, callback)
+			listener.off(EventHomeScreenChecked, callback)
 		}
-		listener.on(EventCheckHomeScreen, callback)
+		listener.on(EventHomeScreenChecked, callback)
 	})
 }
 
