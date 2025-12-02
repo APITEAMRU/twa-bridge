@@ -83,13 +83,27 @@ type BiometricManager = {
 }
 
 const BiometricManager: BiometricManager = {
-	isInited: store.isInited,
-	isBiometricAvailable: store.isBiometricAvailable,
-	isAccessGranted: store.isAccessGranted,
-	isAccessRequested: store.isAccessRequested,
-	isBiometricTokenSaved: store.isBiometricTokenSaved,
-	biometricType: store.biometricType,
-	deviceId: store.deviceId,
+	get isInited() {
+		return store.isInited
+	},
+	get isBiometricAvailable() {
+		return store.isBiometricAvailable
+	},
+	get isAccessGranted() {
+		return store.isAccessGranted
+	},
+	get isAccessRequested() {
+		return store.isAccessRequested
+	},
+	get isBiometricTokenSaved() {
+		return store.isBiometricTokenSaved
+	},
+	get biometricType() {
+		return store.biometricType
+	},
+	get deviceId() {
+		return store.deviceId
+	},
 	init: () => {
 		return new Promise((resolve, reject) => {
 			if (!supportBiometricManager()) {
