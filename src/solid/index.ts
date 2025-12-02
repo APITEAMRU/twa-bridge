@@ -161,7 +161,7 @@ export {
 	supportDownloadFile,
 } from './methods/8.0/downloadFile/downloadFile'
 export {
-	default as BiometricManager,
+	default as bridgeBiometricManager,
 	supportBiometricManager,
 } from './methods/7.2/BiometricManager'
 
