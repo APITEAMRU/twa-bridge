@@ -1,3 +1,9 @@
+export { default as sender } from '../sender'
+export { default as bridgeSend } from '../send'
+export { default as debug } from '../debug'
+export * as listener from '../listener'
+export type { EventsData } from '../listener'
+
 export { default as createIsViewportChanged } from './methods/createIsViewportChanged/createIsViewportChanged'
 
 /* Default */
@@ -167,12 +173,6 @@ export {
 	default as bridgeGetThemeParams,
 	type ThemeParams,
 } from '../utils/themeParams/themeParams'
-
-export { default as sender } from '../sender'
-export { default as bridgeSend } from '../send'
-export { default as debug } from '../debug'
-export * as listener from '../listener'
-export type { EventsData } from '../listener'
 
 export { getAppData } from './helper'
 
