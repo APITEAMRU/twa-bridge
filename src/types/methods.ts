@@ -424,4 +424,23 @@ export type SenderData = {
 		 */
 		file_name: string
 	}
+	[MethodBiometryRequestAccess]: {
+		/**
+		 * Optional. The text to be displayed to a user in the popup describing why the bot needs access to biometrics, 0-128 characters.
+		 */
+		reason?: string
+	}
+	[MethodBiometryRequestAuth]: {
+		/**
+		 * Optional. The text to be displayed to a user in the popup describing why you are asking them to authenticate and what action you will be taking based on that authentication, 0-128 characters.
+		 */
+		reason?: string
+	}
+	[MethodBiometryUpdateToken]: {
+		/**
+		 * Token to store. Has max length of 1024 symbols.
+		 */
+		token: string
+	}
+	[MethodBiometryOpenSettings]: undefined
 }

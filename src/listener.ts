@@ -1,5 +1,4 @@
 import {
-	EventHomeScreenAdded,
 	EventContentSafeAreaChanged,
 	EventEmojiStatusAccessRequested,
 	EventEmojiStatusFailed,
@@ -10,6 +9,10 @@ import {
 	EventSafeAreaChanged,
 	EventThemeChanged,
 	EventHomeScreenChecked,
+	EventWriteAccessRequested,
+	EventBiometryInfoReceived,
+	EventBiometryTokenUpdated,
+	EventBiometryAuthRequested,
 } from '../src/types/events'
 import { getThemeParams, ThemeParams } from './utils'
 
@@ -229,16 +232,6 @@ export type EventsData = {
 		is_state_stable: boolean
 	}
 
-	/**
-	 * Application received write access request status.
-	 */
-	write_access_requested: {
-		/**
-		 * Request status. Can only be allowed.
-		 */
-		status: 'allowed'
-	}
-
 	[EventHomeScreenChecked]: {
 		/**
 		 * Possible values for status are:
@@ -271,6 +264,92 @@ export type EventsData = {
 	[EventFileDownloadRequested]: {
 		status: 'downloading'
 	}
+	/**
+	 * Application received write access request status.
+	 */
+	[EventWriteAccessRequested]: {
+		/**
+		 * Request status. Can only be allowed.
+		 */
+		status: 'allowed'
+	}
+	[EventBiometryInfoReceived]: {
+		/**
+		 * [EN] Shows whether biometry is available.
+		 *
+		 * [RU] Показывает, доступна ли биометрия.
+		 */
+		available: boolean
+		/**
+		 * [EN] Shows whether permission to use biometrics has been requested.
+		 *
+		 * [RU] Показывает, было ли запрошено разрешение на использование биометрии.
+		 */
+		access_requested: boolean
+		/**
+		 * [EN] Shows whether permission to use biometrics has been granted.
+		 *
+		 * [RU] Показывает, предоставлено ли разрешение на использование биометрии.
+		 */
+		access_granted: boolean
+		/**
+		 * [EN] A unique device identifier that can be used to match the token to the device.
+		 *
+		 * [RU] Уникальный идентификатор устройства, который можно использовать для сопоставления токена с устройством.
+		 */
+		device_id: string
+
+		/**
+		 * [EN] Show whether local secure storage contains previously saved token.
+		 *
+		 * [RU] Показать, содержит ли локальное защищенное хранилище ранее сохраненный токен.
+		 */
+		token_saved: boolean
+
+		/**
+		 * [EN] The type of biometrics currently available on the device. Possible values: `face` or `finger`.
+		 *
+		 * [RU] Тип биометрических данных, доступных на устройстве в данный момент. Возможные значения: `face` или `finger`.
+		 */
+		type: 'face' | 'finger' | 'unknown'
+	}
+	[EventBiometryTokenUpdated]: {
+		/**
+		 * [EN] Update status. Possible values: `updated` or `removed`.
+		 *
+		 * [RU] Статус обновления. Возможные значения: `updated` или `removed`.
+		 */
+		status: 'updated' | 'removed'
+	}
+	[EventBiometryAuthRequested]:
+		| {
+				/**
+				 * [EN] Authentication status. Possible values: `failed` or `authorized`.
+				 *
+				 * [RU] Статус аутентификации. Возможные значения: `failed` или `authorized`.
+				 */
+				status: 'failed'
+				/**
+				 * [EN] Token from the local secure storage saved previously. Passed only if status is `authorized`.
+				 *
+				 * [RU] Токен из локального защищённого хранилища, сохранённый ранее. Передаётся только при наличии статуса `authorized`.
+				 */
+				token: undefined
+		  }
+		| {
+				/**
+				 * [EN] Authentication status. Possible values: `failed` or `authorized`.
+				 *
+				 * [RU] Статус аутентификации. Возможные значения: `failed` или `authorized`.
+				 */
+				status: 'authorized'
+				/**
+				 * [EN] Token from the local secure storage saved previously. Passed only if status is `authorized`.
+				 *
+				 * [RU] Токен из локального защищённого хранилища, сохранённый ранее. Передаётся только при наличии статуса `authorized`.
+				 */
+				token: string
+		  }
 }
 
 interface TelegramGameProxy {

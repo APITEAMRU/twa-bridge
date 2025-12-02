@@ -30,6 +30,7 @@
     "typescript": "latest"
   },
   "dependencies": {
+    "@minsize/utils": "^0.1.5",
     "rollup-plugin-typescript-paths": "^1.5.0"
   }
 }

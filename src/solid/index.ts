@@ -60,7 +60,7 @@ export {
 export {
 	default as bridgeRequestWriteAccess,
 	supportRequestWriteAccess,
-} from './methods/requestWriteAccess'
+} from './methods/6.9/requestWriteAccess/requestWriteAccess'
 export {
 	default as bridgeSetBackgroundColor,
 	supportSetBackgroundColor,
@@ -154,6 +154,10 @@ export {
 	default as bridgeDownloadFile,
 	supportDownloadFile,
 } from './methods/8.0/downloadFile/downloadFile'
+export {
+	default as BiometricManager,
+	supportBiometricManager,
+} from './methods/7.2/BiometricManager'
 
 export {
 	default as bridgeGetInitData,

@@ -48,19 +48,20 @@ type CheckHomeScreen = (
  * `missed` — значок не был добавлен на главный экран.
  */
 const checkHomeScreen: CheckHomeScreen = async eventData => {
-	if (!supportCheckHomeScreen()) {
-		debug(MethodCheckHomeScreen, 1)
-		return { status: NOT_SUPPORTED, data: undefined }
-	}
-
-	sender(MethodCheckHomeScreen, eventData)
 	return new Promise((resolve, reject) => {
+		if (!supportCheckHomeScreen()) {
+			debug(MethodCheckHomeScreen, 1)
+			resolve({ status: NOT_SUPPORTED, data: undefined })
+			return
+		}
+
 		const callback = (data: EventsData[typeof EventHomeScreenChecked]) => {
 			data.status = data.status || 'unknown'
 			resolve({ status: true, data })
 			listener.off(EventHomeScreenChecked, callback)
 		}
 		listener.on(EventHomeScreenChecked, callback)
+		sender(MethodCheckHomeScreen, eventData)
 	})
 }
 
