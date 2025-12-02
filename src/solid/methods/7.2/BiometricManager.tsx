@@ -10,7 +10,7 @@ import {
 	TG_DESKTOP,
 	TG_PHONE,
 	TG_WEB,
-} from 'solid'
+} from '../../index'
 import { onCleanup, onMount } from 'solid-js'
 import { createStore, produce } from 'solid-js/store'
 import {

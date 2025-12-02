@@ -1,6 +1,5 @@
 import * as solid_js from 'solid-js';
 import { Context, JSX, Component } from 'solid-js';
-import { NOT_SUPPORTED as NOT_SUPPORTED$1, EventsData as EventsData$1, EventBiometryAuthRequested as EventBiometryAuthRequested$1, EventBiometryTokenUpdated as EventBiometryTokenUpdated$1, EventBiometryInfoReceived as EventBiometryInfoReceived$1 } from 'solid';
 
 declare const createIsViewportChanged: () => solid_js.Accessor<{
     height: number;
@@ -507,8 +506,8 @@ type Store = {
     isAccessGranted: boolean;
     isAccessRequested: boolean;
     isBiometricTokenSaved: boolean;
-    biometricType: EventsData$1[typeof EventBiometryInfoReceived$1]['type'];
-    deviceId: EventsData$1[typeof EventBiometryInfoReceived$1]['device_id'];
+    biometricType: EventsData[typeof EventBiometryInfoReceived]['type'];
+    deviceId: EventsData[typeof EventBiometryInfoReceived]['device_id'];
 };
 type BiometricManager = {
     isInited: Store['isInited'];
@@ -519,23 +518,23 @@ type BiometricManager = {
     biometricType: Store['biometricType'];
     deviceId: Store['deviceId'];
     init: () => Promise<{
-        status: boolean | typeof NOT_SUPPORTED$1;
+        status: boolean | typeof NOT_SUPPORTED;
         data?: Store;
     }>;
     requestAccess: (eventData: SenderData[typeof MethodBiometryRequestAccess]) => Promise<{
-        status: boolean | typeof NOT_SUPPORTED$1;
+        status: boolean | typeof NOT_SUPPORTED;
         data?: Store;
     }>;
     authenticate: (eventData: SenderData[typeof MethodBiometryRequestAuth]) => Promise<{
-        status: boolean | typeof NOT_SUPPORTED$1;
-        data?: EventsData$1[typeof EventBiometryAuthRequested$1];
+        status: boolean | typeof NOT_SUPPORTED;
+        data?: EventsData[typeof EventBiometryAuthRequested];
     }>;
     updateToken: (eventData: SenderData[typeof MethodBiometryUpdateToken]) => Promise<{
-        status: boolean | typeof NOT_SUPPORTED$1;
-        data?: EventsData$1[typeof EventBiometryTokenUpdated$1];
+        status: boolean | typeof NOT_SUPPORTED;
+        data?: EventsData[typeof EventBiometryTokenUpdated];
     }>;
     openSettings: (eventData: SenderData[typeof MethodBiometryOpenSettings]) => {
-        status: boolean | typeof NOT_SUPPORTED$1;
+        status: boolean | typeof NOT_SUPPORTED;
     };
 };
 declare const BiometricManager: BiometricManager;
