@@ -1,7 +1,6 @@
 import * as solid_js from 'solid-js';
 import { Context, JSX, Component } from 'solid-js';
 import { NOT_SUPPORTED as NOT_SUPPORTED$1, EventsData as EventsData$1, EventBiometryAuthRequested as EventBiometryAuthRequested$1, EventBiometryTokenUpdated as EventBiometryTokenUpdated$1, EventBiometryInfoReceived as EventBiometryInfoReceived$1 } from 'solid';
-import { SenderData as SenderData$1, MethodBiometryRequestAccess as MethodBiometryRequestAccess$1, MethodBiometryRequestAuth as MethodBiometryRequestAuth$1, MethodBiometryUpdateToken as MethodBiometryUpdateToken$1, MethodBiometryOpenSettings as MethodBiometryOpenSettings$1 } from 'types/methods';
 
 declare const createIsViewportChanged: () => solid_js.Accessor<{
     height: number;
@@ -269,6 +268,239 @@ type DownloadFile = (eventData?: SenderData[typeof MethodRequestFileDownload]) =
 declare const downloadFile: DownloadFile;
 declare const supportDownloadFile: () => boolean;
 
+declare const MethodInvokeCustomMethod = "web_app_invoke_custom_method";
+declare const MethodOpenScanQrPopup = "web_app_open_scan_qr_popup";
+declare const MethodReadTextFromClipboard = "web_app_read_text_from_clipboard";
+declare const MethodRequestPhone = "web_app_request_phone";
+declare const MethodClose = "web_app_close";
+declare const MethodCloseScanQrPopup = "web_app_close_scan_qr_popup";
+declare const MethodDataSend = "web_app_data_send";
+declare const MethodExpand = "web_app_expand";
+declare const MethodIframeReady = "iframe_ready";
+declare const MethodIframeWillReload = "iframe_will_reload";
+declare const MethodOpenInvoice = "web_app_open_invoice";
+declare const MethodOpenLink = "web_app_open_link";
+declare const MethodOpenPopup = "web_app_open_popup";
+declare const MethodOpenTgLink = "web_app_open_tg_link";
+declare const MethodReady = "web_app_ready";
+declare const MethodRequestTheme = "web_app_request_theme";
+declare const MethodRequestViewport = "web_app_request_viewport";
+declare const MethodRequestWriteAccess = "web_app_request_write_access";
+declare const MethodSetBackgroundColor = "web_app_set_background_color";
+declare const MethodSetHeaderColor = "web_app_set_header_color";
+declare const MethodSetBottomBarColor = "web_app_set_bottom_bar_color";
+declare const MethodSetupBackButton = "web_app_setup_back_button";
+declare const MethodSetupClosingBehavior = "web_app_setup_closing_behavior";
+declare const MethodSetupMainButton = "web_app_setup_main_button";
+declare const MethodSetupSettingsButton = "web_app_setup_settings_button";
+declare const MethodSwitchInlineQuery = "web_app_switch_inline_query";
+declare const MethodTriggerHapticFeedback = "web_app_trigger_haptic_feedback";
+declare const MethodSetupSwipeBehavior = "web_app_setup_swipe_behavior";
+declare const MethodShareToStory = "web_app_share_to_story";
+declare const MethodRequestSafeArea = "web_app_request_safe_area";
+declare const MethodRequestContentSafeArea = "web_app_request_content_safe_area";
+declare const MethodRequestFullscreen = "web_app_request_fullscreen";
+declare const MethodExitFullscreen = "web_app_exit_fullscreen";
+declare const MethodToggleOrientationLock = "web_app_toggle_orientation_lock";
+declare const MethodAddToHomeScreen = "web_app_add_to_home_screen";
+declare const MethodCheckHomeScreen = "web_app_check_home_screen";
+declare const MethodSendPreparedMessage = "web_app_send_prepared_message";
+declare const MethodSetEmojiStatus = "web_app_set_emoji_status";
+declare const MethodRequestEmojiStatusAccess = "web_app_request_emoji_status_access";
+declare const MethodRequestFileDownload = "web_app_request_file_download";
+declare const MethodBiometryOpenSettings = "web_app_biometry_open_settings";
+declare const MethodBiometryRequestAccess = "web_app_biometry_request_access";
+declare const MethodBiometryRequestAuth = "web_app_biometry_request_auth";
+declare const MethodBiometryUpdateToken = "web_app_biometry_update_token";
+declare enum Method {
+    InvokeCustomMethod = "web_app_invoke_custom_method",
+    OpenScanQrPopup = "web_app_open_scan_qr_popup",
+    ReadTextFromClipboard = "web_app_read_text_from_clipboard",
+    RequestPhone = "web_app_request_phone",
+    Close = "web_app_close",
+    CloseScanQrPopup = "web_app_close_scan_qr_popup",
+    DataSend = "web_app_data_send",
+    Expand = "web_app_expand",
+    IframeReady = "iframe_ready",
+    IframeWillReload = "iframe_will_reload",
+    OpenInvoice = "web_app_open_invoice",
+    OpenLink = "web_app_open_link",
+    OpenPopup = "web_app_open_popup",
+    OpenTgLink = "web_app_open_tg_link",
+    Ready = "web_app_ready",
+    RequestTheme = "web_app_request_theme",
+    RequestViewport = "web_app_request_viewport",
+    RequestWriteAccess = "web_app_request_write_access",
+    SetBackgroundColor = "web_app_set_background_color",
+    SetHeaderColor = "web_app_set_header_color",
+    SetBottomBarColor = "web_app_set_bottom_bar_color",
+    SetupBackButton = "web_app_setup_back_button",
+    SetupClosingBehavior = "web_app_setup_closing_behavior",
+    SetupMainButton = "web_app_setup_main_button",
+    SetupSettingsButton = "web_app_setup_settings_button",
+    SwitchInlineQuery = "web_app_switch_inline_query",
+    TriggerHapticFeedback = "web_app_trigger_haptic_feedback",
+    SetupSwipeBehavior = "web_app_setup_swipe_behavior",
+    ShareToStory = "web_app_share_to_story",
+    RequestSafeArea = "web_app_request_safe_area",
+    RequestContentSafeArea = "web_app_request_content_safe_area",
+    RequestFullscreen = "web_app_request_fullscreen",
+    ExitFullscreen = "web_app_exit_fullscreen",
+    ToggleOrientationLock = "web_app_toggle_orientation_lock",
+    AddToHomeScreen = "web_app_add_to_home_screen",
+    CheckHomeScreen = "web_app_check_home_screen",
+    SendPreparedMessage = "web_app_send_prepared_message",
+    SetEmojiStatus = "web_app_set_emoji_status",
+    RequestEmojiStatusAccess = "web_app_request_emoji_status_access",
+    RequestFileDownload = "web_app_request_file_download"
+}
+type PopupButton = {
+    id: string;
+    type: 'default' | 'destructive' | 'ok' | 'close' | 'cancel';
+    text: string;
+};
+type SenderData = {
+    [MethodInvokeCustomMethod]: {
+        req_id?: string;
+        method: string;
+        params: unknown;
+    };
+    [MethodOpenScanQrPopup]: {
+        text?: string;
+        is_close?: boolean;
+    };
+    [MethodReadTextFromClipboard]: {
+        req_id?: string;
+    };
+    [MethodRequestPhone]: undefined;
+    [MethodClose]: undefined;
+    [MethodCloseScanQrPopup]: undefined;
+    [MethodDataSend]: {
+        data: string;
+    };
+    [MethodExpand]: undefined;
+    [MethodIframeReady]: {
+        reload_supported?: boolean;
+    };
+    [MethodIframeWillReload]: undefined;
+    [MethodOpenInvoice]: {
+        slug: string;
+    };
+    [MethodOpenLink]: {
+        url: string;
+        try_instant_view?: boolean;
+        try_browser?: boolean;
+    };
+    [MethodOpenPopup]: {
+        title: string;
+        message: string;
+        buttons: PopupButton[];
+    };
+    [MethodOpenTgLink]: {
+        path_full: string;
+        force_request?: boolean;
+    };
+    [MethodReady]: undefined;
+    [MethodRequestTheme]: undefined;
+    [MethodRequestViewport]: undefined;
+    [MethodRequestWriteAccess]: undefined;
+    [MethodSetBackgroundColor]: {
+        color: string;
+    };
+    [MethodSetHeaderColor]: {
+        color_key: 'bg_color' | 'secondary_bg_color';
+        color?: undefined;
+    } | {
+        color: string;
+        color_key?: undefined;
+    };
+    [MethodSetBottomBarColor]: {
+        color_key: 'bg_color' | 'secondary_bg_color' | 'bottom_bar_bg_color';
+        color?: undefined;
+    } | {
+        color: string;
+        color_key?: undefined;
+    };
+    [MethodSetupBackButton]: {
+        is_visible: boolean;
+    };
+    [MethodSetupClosingBehavior]: {
+        need_confirmation: boolean;
+    };
+    [MethodSetupMainButton]: {
+        is_visible?: boolean;
+        is_active?: boolean;
+        is_progress_visible?: boolean;
+        text?: string;
+        color?: string;
+        text_color?: string;
+    };
+    [MethodSetupSettingsButton]: {
+        is_visible: boolean;
+    };
+    [MethodSwitchInlineQuery]: {
+        query: string;
+        chat_types: ('users' | 'bots' | 'groups' | 'channels')[];
+    };
+    [MethodTriggerHapticFeedback]: {
+        type: 'impact';
+        impact_style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft';
+    } | {
+        type: 'notification';
+        notification_type: 'error' | 'success' | 'warning';
+    } | {
+        type: 'selection_change';
+        impact_style?: undefined;
+        notification_type?: undefined;
+    };
+    [MethodSetupSwipeBehavior]: {
+        allow_vertical_swipe: boolean;
+    };
+    [MethodShareToStory]: {
+        media: string;
+        text?: string;
+        widget_link?: {
+            url: string;
+            name?: string;
+        };
+    };
+    [MethodRequestSafeArea]: undefined;
+    [MethodRequestContentSafeArea]: undefined;
+    [MethodRequestFullscreen]: {
+        is_full: boolean;
+    };
+    [MethodExitFullscreen]: {
+        is_full: boolean;
+    };
+    [MethodToggleOrientationLock]: {
+        locked: boolean;
+    };
+    [MethodAddToHomeScreen]: undefined;
+    [MethodCheckHomeScreen]: undefined;
+    [MethodSendPreparedMessage]: {
+        msg_id: number;
+    };
+    [MethodSetEmojiStatus]: {
+        custom_emoji_id: string;
+        duration?: number;
+    };
+    [MethodRequestEmojiStatusAccess]: undefined;
+    [MethodRequestFileDownload]: {
+        url: string;
+        file_name: string;
+    };
+    [MethodBiometryRequestAccess]: {
+        reason?: string;
+    };
+    [MethodBiometryRequestAuth]: {
+        reason?: string;
+    };
+    [MethodBiometryUpdateToken]: {
+        token: string;
+    };
+    [MethodBiometryOpenSettings]: undefined;
+};
+
 type Store = {
     isInited: boolean;
     isBiometricAvailable: boolean;
@@ -290,19 +522,19 @@ type BiometricManager = {
         status: boolean | typeof NOT_SUPPORTED$1;
         data?: Store;
     }>;
-    requestAccess: (eventData: SenderData$1[typeof MethodBiometryRequestAccess$1]) => Promise<{
+    requestAccess: (eventData: SenderData[typeof MethodBiometryRequestAccess]) => Promise<{
         status: boolean | typeof NOT_SUPPORTED$1;
         data?: Store;
     }>;
-    authenticate: (eventData: SenderData$1[typeof MethodBiometryRequestAuth$1]) => Promise<{
+    authenticate: (eventData: SenderData[typeof MethodBiometryRequestAuth]) => Promise<{
         status: boolean | typeof NOT_SUPPORTED$1;
         data?: EventsData$1[typeof EventBiometryAuthRequested$1];
     }>;
-    updateToken: (eventData: SenderData$1[typeof MethodBiometryUpdateToken$1]) => Promise<{
+    updateToken: (eventData: SenderData[typeof MethodBiometryUpdateToken]) => Promise<{
         status: boolean | typeof NOT_SUPPORTED$1;
         data?: EventsData$1[typeof EventBiometryTokenUpdated$1];
     }>;
-    openSettings: (eventData: SenderData$1[typeof MethodBiometryOpenSettings$1]) => {
+    openSettings: (eventData: SenderData[typeof MethodBiometryOpenSettings]) => {
         status: boolean | typeof NOT_SUPPORTED$1;
     };
 };
@@ -537,239 +769,6 @@ declare const listener_once: typeof once;
 declare namespace listener {
   export { type listener_EventsData as EventsData, listener_off as off, listener_on as on, listener_once as once };
 }
-
-declare const MethodInvokeCustomMethod = "web_app_invoke_custom_method";
-declare const MethodOpenScanQrPopup = "web_app_open_scan_qr_popup";
-declare const MethodReadTextFromClipboard = "web_app_read_text_from_clipboard";
-declare const MethodRequestPhone = "web_app_request_phone";
-declare const MethodClose = "web_app_close";
-declare const MethodCloseScanQrPopup = "web_app_close_scan_qr_popup";
-declare const MethodDataSend = "web_app_data_send";
-declare const MethodExpand = "web_app_expand";
-declare const MethodIframeReady = "iframe_ready";
-declare const MethodIframeWillReload = "iframe_will_reload";
-declare const MethodOpenInvoice = "web_app_open_invoice";
-declare const MethodOpenLink = "web_app_open_link";
-declare const MethodOpenPopup = "web_app_open_popup";
-declare const MethodOpenTgLink = "web_app_open_tg_link";
-declare const MethodReady = "web_app_ready";
-declare const MethodRequestTheme = "web_app_request_theme";
-declare const MethodRequestViewport = "web_app_request_viewport";
-declare const MethodRequestWriteAccess = "web_app_request_write_access";
-declare const MethodSetBackgroundColor = "web_app_set_background_color";
-declare const MethodSetHeaderColor = "web_app_set_header_color";
-declare const MethodSetBottomBarColor = "web_app_set_bottom_bar_color";
-declare const MethodSetupBackButton = "web_app_setup_back_button";
-declare const MethodSetupClosingBehavior = "web_app_setup_closing_behavior";
-declare const MethodSetupMainButton = "web_app_setup_main_button";
-declare const MethodSetupSettingsButton = "web_app_setup_settings_button";
-declare const MethodSwitchInlineQuery = "web_app_switch_inline_query";
-declare const MethodTriggerHapticFeedback = "web_app_trigger_haptic_feedback";
-declare const MethodSetupSwipeBehavior = "web_app_setup_swipe_behavior";
-declare const MethodShareToStory = "web_app_share_to_story";
-declare const MethodRequestSafeArea = "web_app_request_safe_area";
-declare const MethodRequestContentSafeArea = "web_app_request_content_safe_area";
-declare const MethodRequestFullscreen = "web_app_request_fullscreen";
-declare const MethodExitFullscreen = "web_app_exit_fullscreen";
-declare const MethodToggleOrientationLock = "web_app_toggle_orientation_lock";
-declare const MethodAddToHomeScreen = "web_app_add_to_home_screen";
-declare const MethodCheckHomeScreen = "web_app_check_home_screen";
-declare const MethodSendPreparedMessage = "web_app_send_prepared_message";
-declare const MethodSetEmojiStatus = "web_app_set_emoji_status";
-declare const MethodRequestEmojiStatusAccess = "web_app_request_emoji_status_access";
-declare const MethodRequestFileDownload = "web_app_request_file_download";
-declare const MethodBiometryOpenSettings = "web_app_biometry_open_settings";
-declare const MethodBiometryRequestAccess = "web_app_biometry_request_access";
-declare const MethodBiometryRequestAuth = "web_app_biometry_request_auth";
-declare const MethodBiometryUpdateToken = "web_app_biometry_update_token";
-declare enum Method {
-    InvokeCustomMethod = "web_app_invoke_custom_method",
-    OpenScanQrPopup = "web_app_open_scan_qr_popup",
-    ReadTextFromClipboard = "web_app_read_text_from_clipboard",
-    RequestPhone = "web_app_request_phone",
-    Close = "web_app_close",
-    CloseScanQrPopup = "web_app_close_scan_qr_popup",
-    DataSend = "web_app_data_send",
-    Expand = "web_app_expand",
-    IframeReady = "iframe_ready",
-    IframeWillReload = "iframe_will_reload",
-    OpenInvoice = "web_app_open_invoice",
-    OpenLink = "web_app_open_link",
-    OpenPopup = "web_app_open_popup",
-    OpenTgLink = "web_app_open_tg_link",
-    Ready = "web_app_ready",
-    RequestTheme = "web_app_request_theme",
-    RequestViewport = "web_app_request_viewport",
-    RequestWriteAccess = "web_app_request_write_access",
-    SetBackgroundColor = "web_app_set_background_color",
-    SetHeaderColor = "web_app_set_header_color",
-    SetBottomBarColor = "web_app_set_bottom_bar_color",
-    SetupBackButton = "web_app_setup_back_button",
-    SetupClosingBehavior = "web_app_setup_closing_behavior",
-    SetupMainButton = "web_app_setup_main_button",
-    SetupSettingsButton = "web_app_setup_settings_button",
-    SwitchInlineQuery = "web_app_switch_inline_query",
-    TriggerHapticFeedback = "web_app_trigger_haptic_feedback",
-    SetupSwipeBehavior = "web_app_setup_swipe_behavior",
-    ShareToStory = "web_app_share_to_story",
-    RequestSafeArea = "web_app_request_safe_area",
-    RequestContentSafeArea = "web_app_request_content_safe_area",
-    RequestFullscreen = "web_app_request_fullscreen",
-    ExitFullscreen = "web_app_exit_fullscreen",
-    ToggleOrientationLock = "web_app_toggle_orientation_lock",
-    AddToHomeScreen = "web_app_add_to_home_screen",
-    CheckHomeScreen = "web_app_check_home_screen",
-    SendPreparedMessage = "web_app_send_prepared_message",
-    SetEmojiStatus = "web_app_set_emoji_status",
-    RequestEmojiStatusAccess = "web_app_request_emoji_status_access",
-    RequestFileDownload = "web_app_request_file_download"
-}
-type PopupButton = {
-    id: string;
-    type: 'default' | 'destructive' | 'ok' | 'close' | 'cancel';
-    text: string;
-};
-type SenderData = {
-    [MethodInvokeCustomMethod]: {
-        req_id?: string;
-        method: string;
-        params: unknown;
-    };
-    [MethodOpenScanQrPopup]: {
-        text?: string;
-        is_close?: boolean;
-    };
-    [MethodReadTextFromClipboard]: {
-        req_id?: string;
-    };
-    [MethodRequestPhone]: undefined;
-    [MethodClose]: undefined;
-    [MethodCloseScanQrPopup]: undefined;
-    [MethodDataSend]: {
-        data: string;
-    };
-    [MethodExpand]: undefined;
-    [MethodIframeReady]: {
-        reload_supported?: boolean;
-    };
-    [MethodIframeWillReload]: undefined;
-    [MethodOpenInvoice]: {
-        slug: string;
-    };
-    [MethodOpenLink]: {
-        url: string;
-        try_instant_view?: boolean;
-        try_browser?: boolean;
-    };
-    [MethodOpenPopup]: {
-        title: string;
-        message: string;
-        buttons: PopupButton[];
-    };
-    [MethodOpenTgLink]: {
-        path_full: string;
-        force_request?: boolean;
-    };
-    [MethodReady]: undefined;
-    [MethodRequestTheme]: undefined;
-    [MethodRequestViewport]: undefined;
-    [MethodRequestWriteAccess]: undefined;
-    [MethodSetBackgroundColor]: {
-        color: string;
-    };
-    [MethodSetHeaderColor]: {
-        color_key: 'bg_color' | 'secondary_bg_color';
-        color?: undefined;
-    } | {
-        color: string;
-        color_key?: undefined;
-    };
-    [MethodSetBottomBarColor]: {
-        color_key: 'bg_color' | 'secondary_bg_color' | 'bottom_bar_bg_color';
-        color?: undefined;
-    } | {
-        color: string;
-        color_key?: undefined;
-    };
-    [MethodSetupBackButton]: {
-        is_visible: boolean;
-    };
-    [MethodSetupClosingBehavior]: {
-        need_confirmation: boolean;
-    };
-    [MethodSetupMainButton]: {
-        is_visible?: boolean;
-        is_active?: boolean;
-        is_progress_visible?: boolean;
-        text?: string;
-        color?: string;
-        text_color?: string;
-    };
-    [MethodSetupSettingsButton]: {
-        is_visible: boolean;
-    };
-    [MethodSwitchInlineQuery]: {
-        query: string;
-        chat_types: ('users' | 'bots' | 'groups' | 'channels')[];
-    };
-    [MethodTriggerHapticFeedback]: {
-        type: 'impact';
-        impact_style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft';
-    } | {
-        type: 'notification';
-        notification_type: 'error' | 'success' | 'warning';
-    } | {
-        type: 'selection_change';
-        impact_style?: undefined;
-        notification_type?: undefined;
-    };
-    [MethodSetupSwipeBehavior]: {
-        allow_vertical_swipe: boolean;
-    };
-    [MethodShareToStory]: {
-        media: string;
-        text?: string;
-        widget_link?: {
-            url: string;
-            name?: string;
-        };
-    };
-    [MethodRequestSafeArea]: undefined;
-    [MethodRequestContentSafeArea]: undefined;
-    [MethodRequestFullscreen]: {
-        is_full: boolean;
-    };
-    [MethodExitFullscreen]: {
-        is_full: boolean;
-    };
-    [MethodToggleOrientationLock]: {
-        locked: boolean;
-    };
-    [MethodAddToHomeScreen]: undefined;
-    [MethodCheckHomeScreen]: undefined;
-    [MethodSendPreparedMessage]: {
-        msg_id: number;
-    };
-    [MethodSetEmojiStatus]: {
-        custom_emoji_id: string;
-        duration?: number;
-    };
-    [MethodRequestEmojiStatusAccess]: undefined;
-    [MethodRequestFileDownload]: {
-        url: string;
-        file_name: string;
-    };
-    [MethodBiometryRequestAccess]: {
-        reason?: string;
-    };
-    [MethodBiometryRequestAuth]: {
-        reason?: string;
-    };
-    [MethodBiometryUpdateToken]: {
-        token: string;
-    };
-    [MethodBiometryOpenSettings]: undefined;
-};
 
 type Debug = (methondName: string, errorId: number) => void;
 declare const debug: Debug;

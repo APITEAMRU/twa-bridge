@@ -20,8 +20,8 @@ import {
 	MethodBiometryRequestAuth,
 	MethodBiometryUpdateToken,
 	SenderData,
-} from 'types/methods'
-import { supportCheck } from 'utils'
+} from '../../../types/methods'
+import { supportCheck } from '../../../utils'
 
 // listener.on(EventBiometryInfoReceived, (data) => {
 
