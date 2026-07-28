@@ -80,6 +80,10 @@ export {
 	supportSetBottomBarColor,
 } from './methods/7.10/setBottomBarColor'
 export {
+	default as bridgeSetupSecondaryButton,
+	supportSetupSecondaryButton,
+} from './methods/7.10/setupSecondaryButton'
+export {
 	default as bridgeSetupBackButton,
 	supportSetupBackButton,
 } from './methods/setupBackButton'
@@ -164,6 +168,58 @@ export {
 	default as bridgeBiometricManager,
 	supportBiometricManager,
 } from './methods/7.2/BiometricManager'
+export {
+	default as bridgeCheckLocation,
+	supportCheckLocation,
+} from './methods/8.0/checkLocation'
+export {
+	default as bridgeOpenLocationSettings,
+	supportOpenLocationSettings,
+} from './methods/8.0/openLocationSettings'
+export {
+	default as bridgeRequestLocation,
+	supportRequestLocation,
+} from './methods/8.0/requestLocation'
+export {
+	default as bridgeStartAccelerometer,
+	supportStartAccelerometer,
+} from './methods/8.0/startAccelerometer'
+export {
+	default as bridgeStopAccelerometer,
+	supportStopAccelerometer,
+} from './methods/8.0/stopAccelerometer'
+export {
+	default as bridgeStartDeviceOrientation,
+	supportStartDeviceOrientation,
+} from './methods/8.0/startDeviceOrientation'
+export {
+	default as bridgeStopDeviceOrientation,
+	supportStopDeviceOrientation,
+} from './methods/8.0/stopDeviceOrientation'
+export {
+	default as bridgeStartGyroscope,
+	supportStartGyroscope,
+} from './methods/8.0/startGyroscope'
+export {
+	default as bridgeStopGyroscope,
+	supportStopGyroscope,
+} from './methods/8.0/stopGyroscope'
+export {
+	default as bridgeDeviceStorage,
+	supportDeviceStorage,
+} from './methods/9.0/deviceStorage'
+export {
+	default as bridgeSecureStorage,
+	supportSecureStorage,
+} from './methods/9.0/secureStorage'
+export {
+	default as bridgeHideKeyboard,
+	supportHideKeyboard,
+} from './methods/9.1/hideKeyboard'
+export {
+	default as bridgeRequestChat,
+	supportRequestChat,
+} from './methods/9.6/requestChat'
 
 export {
 	default as bridgeGetInitData,
@@ -248,6 +304,15 @@ export {
 	MethodStopAccelerometer,
 	MethodStopDeviceOrientation,
 	MethodStopGyroscope,
+	MethodDeviceStorageSaveKey,
+	MethodDeviceStorageGetKey,
+	MethodDeviceStorageClear,
+	MethodSecureStorageSaveKey,
+	MethodSecureStorageGetKey,
+	MethodSecureStorageRestoreKey,
+	MethodSecureStorageClear,
+	MethodHideKeyboard,
+	MethodRequestChat,
 	type SenderData,
 	type PopupButton,
 	Method,
@@ -296,9 +361,19 @@ export {
 	EventGyroscopeStopped,
 	EventHomeScreenAdded,
 	EventHomeScreenChecked,
-	EventHomeScreenFailed,
 	EventLocationChecked,
 	EventLocationRequested,
 	EventSecondaryButtonPressed,
+	EventDeviceStorageKeySaved,
+	EventDeviceStorageKeyReceived,
+	EventDeviceStorageCleared,
+	EventDeviceStorageFailed,
+	EventSecureStorageKeySaved,
+	EventSecureStorageKeyReceived,
+	EventSecureStorageKeyRestored,
+	EventSecureStorageCleared,
+	EventSecureStorageFailed,
+	EventRequestedChatSent,
+	EventRequestedChatFailed,
 	EventVisibilityChanged,
 } from '../types/events'

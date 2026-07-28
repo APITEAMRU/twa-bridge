@@ -5,14 +5,13 @@ import {
 	sender,
 	NOT_SUPPORTED,
 	debug,
-	SenderData,
 	MethodRequestFullscreen,
 	MethodExitFullscreen,
 } from '../../index'
 import { supportCheck } from '../../../utils'
 
 type SetupFullScreen = (
-	eventData?: SenderData[typeof MethodRequestFullscreen]
+	eventData?: { is_full?: boolean }
 ) => {
 	status: boolean | typeof NOT_SUPPORTED
 }

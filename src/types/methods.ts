@@ -61,6 +61,16 @@ export const MethodStopDeviceOrientation = 'web_app_stop_device_orientation'
 export const MethodStopGyroscope = 'web_app_stop_gyroscope'
 export const MethodSetupSecondaryButton = 'web_app_setup_secondary_button'
 
+export const MethodDeviceStorageSaveKey = 'web_app_device_storage_save_key'
+export const MethodDeviceStorageGetKey = 'web_app_device_storage_get_key'
+export const MethodDeviceStorageClear = 'web_app_device_storage_clear'
+export const MethodSecureStorageSaveKey = 'web_app_secure_storage_save_key'
+export const MethodSecureStorageGetKey = 'web_app_secure_storage_get_key'
+export const MethodSecureStorageRestoreKey = 'web_app_secure_storage_restore_key'
+export const MethodSecureStorageClear = 'web_app_secure_storage_clear'
+export const MethodHideKeyboard = 'web_app_hide_keyboard'
+export const MethodRequestChat = 'web_app_request_chat'
+
 export enum Method {
 	InvokeCustomMethod = MethodInvokeCustomMethod,
 	OpenScanQrPopup = MethodOpenScanQrPopup,
@@ -102,20 +112,55 @@ export enum Method {
 	SetEmojiStatus = MethodSetEmojiStatus,
 	RequestEmojiStatusAccess = MethodRequestEmojiStatusAccess,
 	RequestFileDownload = MethodRequestFileDownload,
+	BiometryGetInfo = MethodBiometryGetInfo,
+	BiometryOpenSettings = MethodBiometryOpenSettings,
+	BiometryRequestAccess = MethodBiometryRequestAccess,
+	BiometryRequestAuth = MethodBiometryRequestAuth,
+	BiometryUpdateToken = MethodBiometryUpdateToken,
+	CheckLocation = MethodCheckLocation,
+	OpenLocationSettings = MethodOpenLocationSettings,
+	RequestLocation = MethodRequestLocation,
+	StartAccelerometer = MethodStartAccelerometer,
+	StartDeviceOrientation = MethodStartDeviceOrientation,
+	StartGyroscope = MethodStartGyroscope,
+	StopAccelerometer = MethodStopAccelerometer,
+	StopDeviceOrientation = MethodStopDeviceOrientation,
+	StopGyroscope = MethodStopGyroscope,
+	SetupSecondaryButton = MethodSetupSecondaryButton,
+	DeviceStorageSaveKey = MethodDeviceStorageSaveKey,
+	DeviceStorageGetKey = MethodDeviceStorageGetKey,
+	DeviceStorageClear = MethodDeviceStorageClear,
+	SecureStorageSaveKey = MethodSecureStorageSaveKey,
+	SecureStorageGetKey = MethodSecureStorageGetKey,
+	SecureStorageRestoreKey = MethodSecureStorageRestoreKey,
+	SecureStorageClear = MethodSecureStorageClear,
+	HideKeyboard = MethodHideKeyboard,
+	RequestChat = MethodRequestChat,
 }
 
-export type PopupButton = {
-	/**
-	 * Identifier of the button, 0-64 characters.
-	 */
-	id: string
-
-	type: 'default' | 'destructive' | 'ok' | 'close' | 'cancel'
-	/**
-	 * The text to be displayed on the button, 0-64 characters. Ignored when type is ok, close or cancel.
-	 */
-	text: string
-}
+export type PopupButton =
+	| {
+			/**
+			 * Identifier of the button, 0-64 characters.
+			 */
+			id?: string
+			type?: 'default' | 'destructive'
+			/**
+			 * The text to be displayed on the button, 1-64 characters.
+			 */
+			text: string
+	  }
+	| {
+			/**
+			 * Identifier of the button, 0-64 characters.
+			 */
+			id?: string
+			type: 'ok' | 'close' | 'cancel'
+			/**
+			 * Ignored for buttons with the `ok`, `close` or `cancel` type.
+			 */
+			text?: string
+	  }
 
 export type SenderData = {
 	[MethodInvokeCustomMethod]: {
@@ -197,17 +242,17 @@ export type SenderData = {
 	}
 	[MethodOpenPopup]: {
 		/**
-		 * The text to be displayed in the popup title, 0-64 characters
+		 * Optional. The text to be displayed in the popup title, 0-64 characters.
 		 */
-		title: string
+		title?: string
 		/**
 		 * The message to be displayed in the body of the popup, 1-256 characters
 		 */
 		message: string
 		/**
-		 * List of buttons to be displayed in the popup, 1-3 buttons
+		 * Optional. List of buttons to be displayed in the popup, 1-3 buttons.
 		 */
-		buttons: PopupButton[]
+		buttons?: PopupButton[]
 	}
 	[MethodOpenTgLink]: {
 		/**
@@ -298,6 +343,16 @@ export type SenderData = {
 		 * Optional. The Main Button text color in #RRGGBB format.
 		 */
 		text_color?: string
+		/**
+		 * Optional. Displays a shine effect on the Main Button.
+		 */
+		has_shine_effect?: boolean
+		/**
+		 * Version [9.5]
+		 *
+		 * Optional. Custom emoji identifier for the Main Button icon.
+		 */
+		icon_custom_emoji_id?: string
 	}
 	[MethodSetupSettingsButton]: {
 		/**
@@ -371,7 +426,10 @@ export type SenderData = {
 	}
 
 	[MethodShareToStory]: {
-		media: string
+		/**
+		 * HTTPS URL of the media to share in a story.
+		 */
+		media_url: string
 		/**
 		 * Text which should be inserted in the input after the current bot name. Max length is 2048 symbols.
 		 */
@@ -389,12 +447,8 @@ export type SenderData = {
 	}
 	[MethodRequestSafeArea]: undefined
 	[MethodRequestContentSafeArea]: undefined
-	[MethodRequestFullscreen]: {
-		is_full: boolean
-	}
-	[MethodExitFullscreen]: {
-		is_full: boolean
-	}
+	[MethodRequestFullscreen]: undefined
+	[MethodExitFullscreen]: undefined
 
 	[MethodToggleOrientationLock]: {
 		locked: boolean
@@ -404,7 +458,7 @@ export type SenderData = {
 	[MethodCheckHomeScreen]: undefined
 
 	[MethodSendPreparedMessage]: {
-		msg_id: number
+		id: string
 	}
 	[MethodSetEmojiStatus]: {
 		custom_emoji_id: string
@@ -443,4 +497,129 @@ export type SenderData = {
 		token: string
 	}
 	[MethodBiometryOpenSettings]: undefined
+	[MethodBiometryGetInfo]: undefined
+	[MethodCheckLocation]: undefined
+	[MethodOpenLocationSettings]: undefined
+	[MethodRequestLocation]: undefined
+	[MethodStartAccelerometer]: {
+		/**
+		 * Optional. Refresh rate in milliseconds from 20 to 1000.
+		 */
+		refresh_rate?: number
+	}
+	[MethodStartDeviceOrientation]: {
+		/**
+		 * Optional. Refresh rate in milliseconds from 20 to 1000.
+		 */
+		refresh_rate?: number
+		/**
+		 * Optional. Receive absolute orientation data when available.
+		 */
+		need_absolute?: boolean
+	}
+	[MethodStartGyroscope]: {
+		/**
+		 * Optional. Refresh rate in milliseconds from 20 to 1000.
+		 */
+		refresh_rate?: number
+	}
+	[MethodStopAccelerometer]: undefined
+	[MethodStopDeviceOrientation]: undefined
+	[MethodStopGyroscope]: undefined
+	[MethodSetupSecondaryButton]: {
+		/**
+		 * Optional. Should the Secondary Button be displayed.
+		 */
+		is_visible?: boolean
+		/**
+		 * Optional. Should the Secondary Button be enabled.
+		 */
+		is_active?: boolean
+		/**
+		 * Optional. Should loader inside the Secondary Button be displayed.
+		 */
+		is_progress_visible?: boolean
+		/**
+		 * Optional. Text inside the Secondary Button.
+		 */
+		text?: string
+		/**
+		 * Optional. The Secondary Button background color in #RRGGBB format.
+		 */
+		color?: string
+		/**
+		 * Optional. The Secondary Button text color in #RRGGBB format.
+		 */
+		text_color?: string
+		/**
+		 * Optional. Displays a shine effect on the Secondary Button.
+		 */
+		has_shine_effect?: boolean
+		/**
+		 * Optional. Position of the Secondary Button.
+		 */
+		position?: 'left' | 'right' | 'top' | 'bottom'
+		/**
+		 * Version [9.5]
+		 *
+		 * Optional. Custom emoji identifier for the Secondary Button icon.
+		 */
+		icon_custom_emoji_id?: string
+	}
+	[MethodDeviceStorageSaveKey]: {
+		/**
+		 * Optional. Unique request identifier.
+		 */
+		req_id?: string
+		key: string
+		value: string | null
+	}
+	[MethodDeviceStorageGetKey]: {
+		/**
+		 * Optional. Unique request identifier.
+		 */
+		req_id?: string
+		key: string
+	}
+	[MethodDeviceStorageClear]: {
+		/**
+		 * Optional. Unique request identifier.
+		 */
+		req_id?: string
+	}
+	[MethodSecureStorageSaveKey]: {
+		/**
+		 * Optional. Unique request identifier.
+		 */
+		req_id?: string
+		key: string
+		value: string | null
+	}
+	[MethodSecureStorageGetKey]: {
+		/**
+		 * Optional. Unique request identifier.
+		 */
+		req_id?: string
+		key: string
+	}
+	[MethodSecureStorageRestoreKey]: {
+		/**
+		 * Optional. Unique request identifier.
+		 */
+		req_id?: string
+		key: string
+	}
+	[MethodSecureStorageClear]: {
+		/**
+		 * Optional. Unique request identifier.
+		 */
+		req_id?: string
+	}
+	[MethodHideKeyboard]: undefined
+	[MethodRequestChat]: {
+		/**
+		 * Identifier of a chat request, supplied by the bot.
+		 */
+		req_id: string
+	}
 }

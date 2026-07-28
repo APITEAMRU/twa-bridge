@@ -18,9 +18,7 @@ import {
 import { createStore } from 'solid-js/store'
 
 type Value = {
-	viewport?: EventsData[typeof EventViewportChanged] & {
-		safe_area_bottom: number
-	}
+	viewport?: EventsData[typeof EventViewportChanged]
 	theme?: EventsData[typeof EventThemeChanged]
 	init?: GetInitData
 }
@@ -47,9 +45,7 @@ const ProviderTWA: Component<ProviderTWA> = props => {
 		onInitData()
 
 		const onRequestViewport = (
-			eventData: EventsData[typeof EventViewportChanged] & {
-				safe_area_bottom: number
-			}
+			eventData: EventsData[typeof EventViewportChanged]
 		) => {
 			onInitData()
 			setStore('viewport', eventData)

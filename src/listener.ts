@@ -1,82 +1,51 @@
 import {
+	EventAccelerometerChanged,
+	EventAccelerometerFailed,
+	EventAccelerometerStarted,
+	EventAccelerometerStopped,
 	EventContentSafeAreaChanged,
+	EventFullscreenChanged,
+	EventFullscreenFailed,
+	EventHomeScreenAdded,
+	EventDeviceOrientationChanged,
+	EventDeviceOrientationFailed,
+	EventDeviceOrientationStarted,
+	EventDeviceOrientationStopped,
+	EventDeviceStorageCleared,
+	EventDeviceStorageFailed,
+	EventDeviceStorageKeyReceived,
+	EventDeviceStorageKeySaved,
 	EventEmojiStatusAccessRequested,
 	EventEmojiStatusFailed,
 	EventEmojiStatusSet,
 	EventFileDownloadRequested,
+	EventGyroscopeChanged,
+	EventGyroscopeFailed,
+	EventGyroscopeStarted,
+	EventGyroscopeStopped,
 	EventPreparedMessageFailed,
 	EventPreparedMessageSent,
+	EventLocationChecked,
+	EventLocationRequested,
+	EventRequestedChatFailed,
+	EventRequestedChatSent,
 	EventSafeAreaChanged,
+	EventSecureStorageCleared,
+	EventSecureStorageFailed,
+	EventSecureStorageKeyReceived,
+	EventSecureStorageKeyRestored,
+	EventSecureStorageKeySaved,
+	EventSecondaryButtonPressed,
 	EventThemeChanged,
 	EventHomeScreenChecked,
+	EventVisibilityChanged,
 	EventWriteAccessRequested,
 	EventBiometryInfoReceived,
 	EventBiometryTokenUpdated,
 	EventBiometryAuthRequested,
-} from '../src/types/events'
+} from './types/events'
+import { EventEmitter } from '@minsize/utils'
 import { getThemeParams, ThemeParams } from './utils'
-
-type EventDispatch<D> = (data: D) => void
-
-type EmiterVoid<
-	E extends Record<string | number | symbol, unknown>,
-	K extends keyof E
-> = (
-	key: K,
-	dispatch: EventDispatch<E[K]>,
-	dispatchList?: Array<EventDispatch<E[K]>>
-) => void
-
-type EmiterOnce<
-	E extends Record<string | number | symbol, unknown>,
-	K extends keyof E
-> = (
-	key: K,
-	dispatch: EventDispatch<E[K]>,
-	dispatchList?: Array<EventDispatch<E[K]>>,
-	clb?: (d: E[K]) => void
-) => void
-
-type EmiterEmit<
-	E extends Record<string | number | symbol, unknown>,
-	K extends keyof E
-> = (key: K, value: E[K], dispatchList?: Array<EventDispatch<E[K]>>) => void
-
-type EventMap<
-	E extends Record<string | number | symbol, unknown>,
-	K extends keyof E
-> = Map<K, Array<EventDispatch<E[K]>>>
-
-type Emiter = <Events extends Record<string | number | symbol, unknown>>(
-	map?: EventMap<Events, keyof Events>
-) => {
-	on: EmiterVoid<Events, keyof Events>
-	off: EmiterVoid<Events, keyof Events>
-	once: EmiterOnce<Events, keyof Events>
-	emit: EmiterEmit<Events, keyof Events>
-}
-const emiter: ReturnType<Emiter> = ((map = new Map()) => ({
-	once: (
-		key,
-		item,
-		dispatchList = map.get(key),
-		clb = (d: any) => {
-			item(d)
-			dispatchList && dispatchList.splice(dispatchList.indexOf(item) >>> 0, 1)
-		}
-	) => (dispatchList ? dispatchList.push(clb) : map.set(key, [clb])),
-	on: (key, item, dispatchList = map.get(key)) =>
-		dispatchList ? dispatchList.push(item) : map.set(key, [item]),
-	off: (key, item, dispatchList = map.get(key)) =>
-		dispatchList && item
-			? dispatchList.splice(dispatchList.indexOf(item) >>> 0, 1)
-			: map.set(key, []),
-	emit: (key, data, dispatchList = map.get(key) || []) => {
-		for (const dispatch of dispatchList) {
-			dispatch(data)
-		}
-	},
-}))()
 
 /* Types */
 export type EventsData = {
@@ -149,9 +118,9 @@ export type EventsData = {
 	 */
 	phone_requested: {
 		/**
-		 * Request status. Can only be sent
+		 * Request status.
 		 */
-		status: 'sent'
+		status: 'sent' | 'cancelled'
 	}
 
 	/**
@@ -242,6 +211,16 @@ export type EventsData = {
 		 */
 		status: 'unsupported' | 'unknown' | 'added' | 'missed'
 	}
+	[EventHomeScreenAdded]: undefined
+	[EventFullscreenChanged]: {
+		is_fullscreen: boolean
+	}
+	[EventFullscreenFailed]: {
+		error: string
+	}
+	[EventVisibilityChanged]: {
+		is_visible: boolean
+	}
 	[EventSafeAreaChanged]: {
 		top: number
 		bottom: number
@@ -255,23 +234,27 @@ export type EventsData = {
 		right: number
 	}
 	[EventPreparedMessageSent]: undefined
-	[EventPreparedMessageFailed]: undefined
+	[EventPreparedMessageFailed]: {
+		error: string
+	}
 	[EventEmojiStatusSet]: undefined
-	[EventEmojiStatusFailed]: undefined
+	[EventEmojiStatusFailed]: {
+		error: string
+	}
 	[EventEmojiStatusAccessRequested]: {
-		status: 'allowed'
+		status: 'allowed' | 'cancelled'
 	}
 	[EventFileDownloadRequested]: {
-		status: 'downloading'
+		status: 'downloading' | 'cancelled'
 	}
 	/**
 	 * Application received write access request status.
 	 */
 	[EventWriteAccessRequested]: {
 		/**
-		 * Request status. Can only be allowed.
+		 * Request status.
 		 */
-		status: 'allowed'
+		status: 'allowed' | 'cancelled'
 	}
 	[EventBiometryInfoReceived]: {
 		/**
@@ -350,7 +333,105 @@ export type EventsData = {
 				 */
 				token: string
 		  }
+	[EventLocationChecked]: {
+		available: boolean
+		access_requested: boolean
+		access_granted: boolean
+	}
+	[EventLocationRequested]:
+		| {
+				available: false
+		  }
+		| {
+				available: true
+				latitude: number
+				longitude: number
+				altitude?: number | null
+				course?: number | null
+				speed?: number | null
+				horizontal_accuracy?: number | null
+				vertical_accuracy?: number | null
+				course_accuracy?: number | null
+				speed_accuracy?: number | null
+		  }
+	[EventAccelerometerStarted]: undefined
+	[EventAccelerometerStopped]: undefined
+	[EventAccelerometerChanged]: {
+		x: number
+		y: number
+		z: number
+	}
+	[EventAccelerometerFailed]: {
+		error: string
+	}
+	[EventDeviceOrientationStarted]: undefined
+	[EventDeviceOrientationStopped]: undefined
+	[EventDeviceOrientationChanged]: {
+		absolute: boolean
+		alpha: number
+		beta: number
+		gamma: number
+	}
+	[EventDeviceOrientationFailed]: {
+		error: string
+	}
+	[EventGyroscopeStarted]: undefined
+	[EventGyroscopeStopped]: undefined
+	[EventGyroscopeChanged]: {
+		x: number
+		y: number
+		z: number
+	}
+	[EventGyroscopeFailed]: {
+		error: string
+	}
+	[EventSecondaryButtonPressed]: undefined
+	[EventDeviceStorageKeySaved]: {
+		req_id: string
+	}
+	[EventDeviceStorageKeyReceived]: {
+		req_id: string
+		value: string | null
+	}
+	[EventDeviceStorageCleared]: {
+		req_id: string
+	}
+	[EventDeviceStorageFailed]: {
+		req_id: string
+		error: string
+	}
+	[EventSecureStorageKeySaved]: {
+		req_id: string
+	}
+	[EventSecureStorageKeyReceived]: {
+		req_id: string
+		value: string | null
+		can_restore?: boolean
+	}
+	[EventSecureStorageKeyRestored]: {
+		req_id: string
+		value: string
+	}
+	[EventSecureStorageCleared]: {
+		req_id: string
+	}
+	[EventSecureStorageFailed]: {
+		req_id: string
+		error: string
+	}
+	[EventRequestedChatSent]: undefined
+	[EventRequestedChatFailed]: {
+		error: string
+	}
 }
+
+type EmitterEvents = {
+	[E in keyof EventsData]: [EventsData[E]]
+} & {
+	'*': [{ name: keyof EventsData; data: EventsData[keyof EventsData] }]
+}
+
+const emitter = new EventEmitter<EmitterEvents>()
 
 interface TelegramGameProxy {
 	receiveEvent: (event: string, data: string) => void
@@ -381,37 +462,55 @@ const start = () => {
 	window.TelegramGameProxy_receiveEvent = receiveEvent
 
 	/** Android */
-	window.Telegram = { WebView: { receiveEvent } }
+	window.Telegram = window.Telegram || { WebView: { receiveEvent } }
+	window.Telegram.WebView = window.Telegram.WebView || { receiveEvent }
+	window.Telegram.WebView.receiveEvent = receiveEvent
 
 	/** iOS and Desktop */
 	window.TelegramGameProxy = { receiveEvent }
 
-	function receiveEvent(eventName: string, eventData: any) {
+	function receiveEvent(eventName: string, eventData: unknown) {
 		/* Fix colors */
-		if (eventName === EventThemeChanged) {
-			eventData.theme_params = getThemeParams(eventData.theme_params)
+		if (eventName === EventThemeChanged && eventData && typeof eventData === 'object') {
+			const data = eventData as EventsData[typeof EventThemeChanged]
+			data.theme_params = getThemeParams(data.theme_params)
 		}
 
-		emiter.emit(eventName, eventData)
-		emiter.emit('*', { name: eventName, data: eventData })
+		const name = eventName as keyof EventsData
+		const data = eventData as EventsData[keyof EventsData]
+		if (emitter.e[name]?.length) {
+			emitter.emit(name, data as never)
+		}
+		if (emitter.e['*']?.length) {
+			emitter.emit('*', { name, data })
+		}
 	}
 }
 
 start()
 
-type Listened = <T extends EventsData, E extends keyof T, D extends T[E]>(
+type Listened = <E extends keyof EventsData>(
 	eventName: E,
-	callback: (eventData: D) => void
+	callback: (eventData: EventsData[E]) => void
 ) => void
 
 export const on: Listened = (eventName, callback) => {
-	emiter.on(eventName, callback as EventDispatch<unknown>)
+	emitter.on(
+		eventName,
+		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void
+	)
 }
 
 export const off: Listened = (eventName, callback) => {
-	emiter.off(eventName, callback as EventDispatch<unknown>)
+	emitter.off(
+		eventName,
+		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void
+	)
 }
 
 export const once: Listened = (eventName, callback) => {
-	emiter.once(eventName, callback as EventDispatch<unknown>)
+	emitter.once(
+		eventName,
+		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void
+	)
 }

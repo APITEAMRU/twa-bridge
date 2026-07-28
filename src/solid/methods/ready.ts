@@ -35,6 +35,6 @@ const ready: Ready = eventData => {
  * Method support check
  */
 export const supportReady = () =>
-	supportCheck(6.9, [TG_WEB, TG_DESKTOP, TG_PHONE])
+	supportCheck(0, [TG_WEB, TG_DESKTOP, TG_PHONE])
 
 export default ready

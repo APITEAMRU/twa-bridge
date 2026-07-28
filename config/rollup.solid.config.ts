@@ -5,7 +5,7 @@ import terser from '@rollup/plugin-terser'
 import copy from 'rollup-plugin-copy'
 import { typescriptPaths } from 'rollup-plugin-typescript-paths'
 
-const external = ['solidjs']
+const external = ['solid-js', 'solid-js/store', '@minsize/utils']
 
 const config: RollupOptions[] = [
 	{

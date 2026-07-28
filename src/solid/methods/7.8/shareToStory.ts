@@ -10,7 +10,7 @@ import {
 } from '../../index'
 import { supportCheck } from '../../../utils'
 
-type ShareToStory = (eventData?: SenderData[typeof MethodShareToStory]) => {
+type ShareToStory = (eventData: SenderData[typeof MethodShareToStory]) => {
 	status: boolean | typeof NOT_SUPPORTED
 	error_id?: number
 }
@@ -29,14 +29,14 @@ const shareToStory: ShareToStory = eventData => {
 		return { status: NOT_SUPPORTED }
 	}
 
-	if (eventData?.text && eventData?.text.length > 2048) {
+	if (eventData.text && eventData.text.length > 2048) {
 		console.warn(
 			`[@apiteam/twa-bridge](${MethodShareToStory}) | Text is too long`
 		)
 		return { status: false, error_id: 1 }
 	}
 
-	if (eventData?.widget_link?.name && eventData?.widget_link.name.length > 48) {
+	if (eventData.widget_link?.name && eventData.widget_link.name.length > 48) {
 		console.warn(
 			`[@apiteam/twa-bridge](${MethodShareToStory}) | Link name is too long`
 		)

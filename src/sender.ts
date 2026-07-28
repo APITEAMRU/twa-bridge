@@ -1,6 +1,6 @@
 import debug from './debug'
 
-type Sender = (eventType: string, eventData?: any) => void
+type Sender = (eventType: string, eventData?: unknown) => void
 
 /**
  * EDIT

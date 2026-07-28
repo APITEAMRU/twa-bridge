@@ -29,3 +29,5 @@ const result = await bridgeRequestEmojiStatus({})
   status: boolean | 'not_supported'
 }
 ```
+
+`status: false` означает, что пользователь отменил запрос доступа.

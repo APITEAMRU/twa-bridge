@@ -35,5 +35,6 @@ const result = await bridgeSetEmojiStatus({ custom_emoji_id: "123" })
 ```typescript
 {
   status: boolean | 'not_supported'
+  data?: { error: string }
 }
 ```

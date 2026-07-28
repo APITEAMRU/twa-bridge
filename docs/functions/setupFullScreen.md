@@ -24,7 +24,7 @@ description: >-
 ## Использование
 
 ```javascript
-bridgeSetupFullScreen({ is_full:true })
+bridgeSetupFullScreen({ is_full: true })
 ```
 
 ## Параметры
@@ -40,3 +40,5 @@ bridgeSetupFullScreen({ is_full:true })
   status: boolean | 'not_supported'
 }
 ```
+
+`is_full: true` отправляет `web_app_request_fullscreen`, а `is_full: false` (или отсутствие параметра) — `web_app_exit_fullscreen`. У низкоуровневых Telegram-методов нет payload.

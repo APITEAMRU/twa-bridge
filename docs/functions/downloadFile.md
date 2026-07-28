@@ -38,3 +38,5 @@ const result = await bridgeDownloadFile({
   status: boolean | 'not_supported'
 }
 ```
+
+`status: false` означает, что пользователь отменил загрузку. При `status: true` Telegram начал загрузку.

@@ -14,7 +14,7 @@ import {
 import { supportCheck } from '../../../../utils'
 
 type DownloadFile = (
-	eventData?: SenderData[typeof MethodRequestFileDownload]
+	eventData: SenderData[typeof MethodRequestFileDownload]
 ) => Promise<{
 	status: boolean | typeof NOT_SUPPORTED
 }>

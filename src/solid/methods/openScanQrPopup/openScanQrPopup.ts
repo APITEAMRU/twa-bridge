@@ -35,19 +35,26 @@ const openScanQrPopup: OpenScanQrPopup = async eventData => {
 		return { status: NOT_SUPPORTED }
 	}
 
-	sender(MethodOpenScanQrPopup, eventData)
-
 	return new Promise((resolve, reject) => {
-		listener.once(EventQrTextReceived, data => {
+		const clear = () => {
+			listener.off(EventQrTextReceived, qrTextReceived)
+			listener.off(EventScanQrPopupClosed, scanQrPopupClosed)
+		}
+		const qrTextReceived = (data: EventsData[typeof EventQrTextReceived]) => {
+			clear()
 			/* Closed the QR scanner after reading the data  */
 			if (eventData.is_close) {
 				bridgeCloseScanQrPopup()
 			}
 			resolve({ status: true, data: data })
-		})
-		listener.once(EventScanQrPopupClosed, () => {
+		}
+		const scanQrPopupClosed = () => {
+			clear()
 			resolve({ status: 'closed' })
-		})
+		}
+		listener.on(EventQrTextReceived, qrTextReceived)
+		listener.on(EventScanQrPopupClosed, scanQrPopupClosed)
+		sender(MethodOpenScanQrPopup, eventData)
 	})
 }
 

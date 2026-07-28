@@ -20,19 +20,20 @@ description: >-
 ## Использование
 
 ```javascript
-bridgeShareMessage({ msg_id: 123 })
+bridgeShareMessage({ id: "prepared-message-id" })
 ```
 
 ## Параметры
 
 | Параметр | Тип    | Описание      |
 | -------- | ------ | ------------- |
-| msg_id   | number | Идентификатор |
+| id       | string | Идентификатор `PreparedInlineMessage`, полученный из `savePreparedInlineMessage`. |
 
 ## Возвращаемое значение
 
 ```typescript
 {
   status: boolean | 'not_supported'
+  data?: { error: string }
 }
 ```

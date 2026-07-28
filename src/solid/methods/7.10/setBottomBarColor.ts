@@ -45,6 +45,6 @@ const setBottomBarColor: SetBottomBarColor = eventData => {
  * Method support check
  */
 export const supportSetBottomBarColor = () =>
-	supportCheck(7.1, [TG_WEB, TG_DESKTOP, TG_PHONE])
+	supportCheck('7.10', [TG_WEB, TG_DESKTOP, TG_PHONE])
 
 export default setBottomBarColor

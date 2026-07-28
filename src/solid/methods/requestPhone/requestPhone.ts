@@ -30,14 +30,11 @@ const requestPhone: RequestPhone = async () => {
 		return { status: NOT_SUPPORTED }
 	}
 
-	sender(MethodRequestPhone)
 	return new Promise((resolve, reject) => {
 		listener.once(EventPhoneRequested, data => {
-			if (data.status === 'sent') {
-				resolve({ status: true })
-			}
-			resolve({ status: false })
+			resolve({ status: data.status === 'sent' })
 		})
+		sender(MethodRequestPhone)
 	})
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@apiteam/twa-bridge",
-  "version": "8.0.12",
+  "version": "9.6.0",
   "description": "Telegram bridge",
   "license": "MIT",
   "types": "index.ts",
@@ -19,5 +19,8 @@
     "telegram",
     "tg",
     "telegram module"
-  ]
+  ],
+  "dependencies": {
+    "@minsize/utils": "^1.0.0"
+  }
 }

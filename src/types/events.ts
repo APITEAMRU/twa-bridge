@@ -47,11 +47,24 @@ export const EventGyroscopeStopped = 'gyroscope_stopped'
 
 export const EventHomeScreenAdded = 'home_screen_added'
 export const EventHomeScreenChecked = 'home_screen_checked'
-export const EventHomeScreenFailed = 'home_screen_failed'
 
 export const EventLocationChecked = 'location_checked'
 export const EventLocationRequested = 'location_requested'
 
 export const EventSecondaryButtonPressed = 'secondary_button_pressed'
+
+export const EventDeviceStorageKeySaved = 'device_storage_key_saved'
+export const EventDeviceStorageKeyReceived = 'device_storage_key_received'
+export const EventDeviceStorageCleared = 'device_storage_cleared'
+export const EventDeviceStorageFailed = 'device_storage_failed'
+
+export const EventSecureStorageKeySaved = 'secure_storage_key_saved'
+export const EventSecureStorageKeyReceived = 'secure_storage_key_received'
+export const EventSecureStorageKeyRestored = 'secure_storage_key_restored'
+export const EventSecureStorageCleared = 'secure_storage_cleared'
+export const EventSecureStorageFailed = 'secure_storage_failed'
+
+export const EventRequestedChatSent = 'requested_chat_sent'
+export const EventRequestedChatFailed = 'requested_chat_failed'
 
 export const EventVisibilityChanged = 'visibility_changed'

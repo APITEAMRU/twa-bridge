@@ -3,6 +3,8 @@
 * [Telegram Bridge](README.md)
   * [Методы](docs/methods/README.md)
   * [Функции](docs/functions/README.md)
+    * [Listener и события](docs/functions/listener.md)
+    * [Платформенные API 7.10–9.6](docs/functions/platformApis.md)
     * [openLink](docs/functions/openLink.md)
     * [openTgLink](docs/functions/openTgLink.md)
     * [setBackgroundColor](docs/functions/setBackgroundColor.md)

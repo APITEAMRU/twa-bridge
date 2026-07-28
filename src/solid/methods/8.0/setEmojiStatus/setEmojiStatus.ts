@@ -10,13 +10,15 @@ import {
 	EventEmojiStatusFailed,
 	listener,
 	EventEmojiStatusSet,
+	EventsData,
 } from '../../../index'
 import { supportCheck } from '../../../../utils'
 
 type SetEmojiStatus = (
-	eventData?: SenderData[typeof MethodSetEmojiStatus]
+	eventData: SenderData[typeof MethodSetEmojiStatus]
 ) => Promise<{
 	status: boolean | typeof NOT_SUPPORTED
+	data?: EventsData[typeof EventEmojiStatusFailed]
 }>
 
 /**
@@ -35,8 +37,20 @@ const setEmojiStatus: SetEmojiStatus = async eventData => {
 	}
 
 	return new Promise((resolve, reject) => {
-		listener.once(EventEmojiStatusSet, () => resolve({ status: true }))
-		listener.once(EventEmojiStatusFailed, () => resolve({ status: false }))
+		const clear = () => {
+			listener.off(EventEmojiStatusSet, set)
+			listener.off(EventEmojiStatusFailed, failed)
+		}
+		const set = () => {
+			clear()
+			resolve({ status: true })
+		}
+		const failed = (data: EventsData[typeof EventEmojiStatusFailed]) => {
+			clear()
+			resolve({ status: false, data })
+		}
+		listener.on(EventEmojiStatusSet, set)
+		listener.on(EventEmojiStatusFailed, failed)
 
 		sender(MethodSetEmojiStatus, eventData)
 	})

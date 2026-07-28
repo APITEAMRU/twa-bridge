@@ -1,6 +1,6 @@
-import { NOT_SUPPORTED, debug } from '../index'
+import { NOT_SUPPORTED } from '../index'
 
-type SessionStorageSet = ({ key, value }: { key: string; value: any }) => {
+type SessionStorageSet = ({ key, value }: { key: string; value: unknown }) => {
 	status: boolean | typeof NOT_SUPPORTED
 }
 
@@ -10,12 +10,22 @@ type SessionStorageSet = ({ key, value }: { key: string; value: any }) => {
 const sessionStorageSet: SessionStorageSet = ({ key, value }) => {
 	// if (!supportSessionStorageSet()) { debug("sessionStorageSet", 1); return { status: NOT_SUPPORTED } }
 
+	let storageValue: string
 	try {
-		window.sessionStorage.setItem('__telegram__' + key, JSON.stringify(value))
+		storageValue = JSON.stringify(value) ?? String(value)
+	} catch (e) {
+		try {
+			storageValue = String(value)
+		} catch (e) {
+			return { status: false }
+		}
+	}
+
+	try {
+		window.sessionStorage.setItem('__telegram__' + key, storageValue)
 		return { status: true }
 	} catch (e) {
-		window.sessionStorage.setItem('__telegram__' + key, value)
-		return { status: true }
+		return { status: false }
 	}
 }
 

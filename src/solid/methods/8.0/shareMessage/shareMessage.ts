@@ -10,13 +10,15 @@ import {
 	EventPreparedMessageFailed,
 	listener,
 	EventPreparedMessageSent,
+	EventsData,
 } from '../../../index'
 import { supportCheck } from '../../../../utils'
 
 type ShareMessage = (
-	eventData?: SenderData[typeof MethodSendPreparedMessage]
+	eventData: SenderData[typeof MethodSendPreparedMessage]
 ) => Promise<{
 	status: boolean | typeof NOT_SUPPORTED
+	data?: EventsData[typeof EventPreparedMessageFailed]
 }>
 
 /**
@@ -37,8 +39,20 @@ const shareMessage: ShareMessage = async eventData => {
 	}
 
 	return new Promise((resolve, reject) => {
-		listener.once(EventPreparedMessageSent, () => resolve({ status: true }))
-		listener.once(EventPreparedMessageFailed, () => resolve({ status: false }))
+		const clear = () => {
+			listener.off(EventPreparedMessageSent, sent)
+			listener.off(EventPreparedMessageFailed, failed)
+		}
+		const sent = () => {
+			clear()
+			resolve({ status: true })
+		}
+		const failed = (data: EventsData[typeof EventPreparedMessageFailed]) => {
+			clear()
+			resolve({ status: false, data })
+		}
+		listener.on(EventPreparedMessageSent, sent)
+		listener.on(EventPreparedMessageFailed, failed)
 
 		sender(MethodSendPreparedMessage, eventData)
 	})

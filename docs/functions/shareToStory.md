@@ -21,7 +21,7 @@ description: >-
 
 ```javascript
 bridgeShareToStory({ 
-  media: "https://i1.sndcdn.com/artworks-000196299556-zqzzcl-t500x500.jpg",
+  media_url: "https://i1.sndcdn.com/artworks-000196299556-zqzzcl-t500x500.jpg",
   text: "Каспийский Груз 18+ ft. Rigos"
 })
 ```
@@ -30,7 +30,7 @@ bridgeShareToStory({
 
 | Параметр         | Тип    | Описание                                                                                                                      |
 | ---------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| media            | string | Ссылка на контент, только HTTPS                                                                                               |
+| media_url        | string | Ссылка на контент, только HTTPS                                                                                               |
 | text             | string | Необязательно. Текст, который необходимо вставить в поле ввода после текущего имени бота. Максимальная длина — 2048 символов. |
 | widget_link      | Object | Необязательно.                                                                                                                |
 | widget_link.url  | string | URL-адрес, который будет включен в историю.                                                                                   |

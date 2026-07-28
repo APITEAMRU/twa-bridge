@@ -224,17 +224,17 @@ description: >-
 
 | Поле    | Тип            | Описание                                                                                |
 | ------- | -------------- | --------------------------------------------------------------------------------------- |
-| title   | string         | Текст, который будет отображаться в заголовке всплывающего окна, 0-64 символа.          |
+| title   | string         | Необязательно. Текст, который будет отображаться в заголовке всплывающего окна, 0-64 символа.          |
 | message | string         | Сообщение, которое будет отображаться в тексте всплывающего окна, от 1 до 256 символов. |
-| buttons | PopupButton\[] | Список кнопок, которые будут отображаться во всплывающем окне, 1-3 кнопки               |
+| buttons | PopupButton\[] | Необязательно. Список кнопок, которые будут отображаться во всплывающем окне, 1-3 кнопки               |
 
 #### PopupButton
 
 | Поле | Тип             | Описание                                                                                                           |
 | ---- | --------------- | ------------------------------------------------------------------------------------------------------------------ |
-| id   | string          | Идентификатор кнопки, 0-64 символа.                                                                                |
+| id   | string          | Необязательно. Идентификатор кнопки, 0-64 символа.                                                                 |
 | type | PopupButtonType | Тип кнопки. "default", "destructive", "ok", "close", "cancel"                                                      |
-| text | PopupButton\[]  | Текст, который будет отображаться на кнопке, 0-64 символа. Игнорируется, если `type` в `ok`, `close` или `cancel`. |
+| text | string          | Текст кнопки, 1-64 символа. Обязателен для `default` и `destructive`; игнорируется для `ok`, `close` и `cancel`. |
 
 #### PopupButtonType
 
@@ -245,6 +245,90 @@ description: >-
 | ok          | Кнопка с локализованным текстом «ОК»                                                  |
 | close       | Кнопка с локализованным текстом «Закрыть»                                             |
 | cancel      | Кнопка с локализованным текстом «Отмена»                                              |
+
+***
+
+### `web_app_setup_secondary_button`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 7.10+**
+{% endhint %}
+
+Обновляет настройки Secondary Button. Поддерживаются `is_visible`, `is_active`, `is_progress_visible`, `text`, `color`, `text_color`, `has_shine_effect`, `position` (`left`, `right`, `top`, `bottom`) и `icon_custom_emoji_id` (9.5+).
+
+При нажатии Telegram отправляет событие `secondary_button_pressed`.
+
+***
+
+### `web_app_check_location`, `web_app_open_location_settings`, `web_app_request_location`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 8.0+**
+{% endhint %}
+
+Проверяют доступность геолокации, открывают её настройки и запрашивают текущую координату соответственно. Методы проверки и запроса не принимают параметров и вызывают `location_checked` или `location_requested`. Настройки доступа следует открывать только в ответ на действие пользователя.
+
+***
+
+### `web_app_start_accelerometer`, `web_app_start_device_orientation`, `web_app_start_gyroscope`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 8.0+**
+{% endhint %}
+
+Запускают соответствующий датчик. Для всех методов доступен необязательный `refresh_rate` от 20 до 1000 мс. У `web_app_start_device_orientation` также есть `need_absolute: boolean`.
+
+Результат приходит событиями `accelerometer_started`, `device_orientation_started` или `gyroscope_started`; ошибки — событиями с суффиксом `_failed`. Новые данные передаются в `accelerometer_changed`, `device_orientation_changed` и `gyroscope_changed`.
+
+***
+
+### `web_app_stop_accelerometer`, `web_app_stop_device_orientation`, `web_app_stop_gyroscope`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 8.0+**
+{% endhint %}
+
+Останавливают соответствующий датчик без параметров. Подтверждение приходит событиями `accelerometer_stopped`, `device_orientation_stopped` или `gyroscope_stopped`.
+
+***
+
+### `web_app_device_storage_save_key`, `web_app_device_storage_get_key`, `web_app_device_storage_clear`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 9.0+**
+{% endhint %}
+
+Работают с постоянным хранилищем, привязанным к боту и устройству. У каждого запроса может быть `req_id`; у записи обязательны `key` и `value`, где `value: null` удаляет ключ. Ответы содержат тот же `req_id` в событиях `device_storage_*`.
+
+***
+
+### `web_app_secure_storage_save_key`, `web_app_secure_storage_get_key`, `web_app_secure_storage_restore_key`, `web_app_secure_storage_clear`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 9.0+**
+{% endhint %}
+
+Аналогичны Device Storage, но используют защищённое хранилище Telegram. `restore_key` запрашивает восстановление ключа. Ответы приходят в событиях `secure_storage_*`.
+
+***
+
+### `web_app_hide_keyboard`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 9.1+**
+{% endhint %}
+
+Скрывает экранную клавиатуру. Параметров и отдельного события результата нет.
+
+***
+
+### `web_app_request_chat`
+
+{% hint style="info" %}
+**Минимальная версия Telegram API: 9.6+**
+{% endhint %}
+
+Открывает сценарий выбора чата, настроенный ботом. Принимает `req_id` — идентификатор запроса, предоставленный ботом. Результат приходит событием `requested_chat_sent` или `requested_chat_failed`.
 
 ***
 
