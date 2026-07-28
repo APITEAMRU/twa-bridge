@@ -639,17 +639,19 @@ declare global {
         };
     }
 }
+declare let TelegramIsIframe: boolean;
 type Listened = <E extends keyof EventsData>(eventName: E, callback: (eventData: EventsData[E]) => void) => void;
 declare const on: Listened;
 declare const off: Listened;
 declare const once: Listened;
 
 type listener_EventsData = EventsData;
+declare const listener_TelegramIsIframe: typeof TelegramIsIframe;
 declare const listener_off: typeof off;
 declare const listener_on: typeof on;
 declare const listener_once: typeof once;
 declare namespace listener {
-  export { listener_off as off, listener_on as on, listener_once as once };
+  export { listener_TelegramIsIframe as TelegramIsIframe, listener_off as off, listener_on as on, listener_once as once };
   export type { listener_EventsData as EventsData };
 }
 

@@ -9,6 +9,7 @@ import {
 	SenderData,
 } from '../../index'
 import { supportCheck } from '../../../utils'
+import { TelegramIsIframe } from 'listener'
 
 type OpenTgLink = (eventData: SenderData[typeof MethodOpenTgLink]) => {
 	status: boolean | typeof NOT_SUPPORTED
@@ -28,7 +29,7 @@ type OpenTgLink = (eventData: SenderData[typeof MethodOpenTgLink]) => {
 const openTgLink: OpenTgLink = eventData => {
 	/** Requires editing on the telegram side */
 	const path = createURL(eventData.path_full)
-	eventData.path_full = path.pathname = path.search
+	eventData.path_full = path.pathname + path.search
 	// if (eventData.path_full[0] !== '/')
 	// 	eventData.path_full = '/' + eventData.path_full
 
@@ -37,7 +38,11 @@ const openTgLink: OpenTgLink = eventData => {
 		return { status: NOT_SUPPORTED }
 	}
 
-	sender(MethodOpenTgLink, eventData)
+	if (TelegramIsIframe) {
+		sender(MethodOpenTgLink, eventData)
+	} else {
+		location.href = 'https://t.me' + eventData.path_full
+	}
 	return { status: true }
 }
 

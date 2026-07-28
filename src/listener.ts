@@ -454,6 +454,8 @@ declare global {
 	}
 }
 
+export let TelegramIsIframe = false
+
 /**
  * Start listener
  */
@@ -471,7 +473,11 @@ const start = () => {
 
 	function receiveEvent(eventName: string, eventData: unknown) {
 		/* Fix colors */
-		if (eventName === EventThemeChanged && eventData && typeof eventData === 'object') {
+		if (
+			eventName === EventThemeChanged &&
+			eventData &&
+			typeof eventData === 'object'
+		) {
 			const data = eventData as EventsData[typeof EventThemeChanged]
 			data.theme_params = getThemeParams(data.theme_params)
 		}
@@ -485,32 +491,34 @@ const start = () => {
 			emitter.emit('*', { name, data })
 		}
 	}
+
+	TelegramIsIframe = window.parent != null && window != window.parent
 }
 
 start()
 
 type Listened = <E extends keyof EventsData>(
 	eventName: E,
-	callback: (eventData: EventsData[E]) => void
+	callback: (eventData: EventsData[E]) => void,
 ) => void
 
 export const on: Listened = (eventName, callback) => {
 	emitter.on(
 		eventName,
-		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void
+		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void,
 	)
 }
 
 export const off: Listened = (eventName, callback) => {
 	emitter.off(
 		eventName,
-		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void
+		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void,
 	)
 }
 
 export const once: Listened = (eventName, callback) => {
 	emitter.once(
 		eventName,
-		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void
+		callback as unknown as (...args: EmitterEvents[typeof eventName]) => void,
 	)
 }
