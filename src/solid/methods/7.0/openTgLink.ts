@@ -9,7 +9,7 @@ import {
 	SenderData,
 } from '../../index'
 import { supportCheck } from '../../../utils'
-import { TelegramIsIframe } from 'listener'
+import { TelegramIsIframe } from '../../../listener'
 
 type OpenTgLink = (eventData: SenderData[typeof MethodOpenTgLink]) => {
 	status: boolean | typeof NOT_SUPPORTED
